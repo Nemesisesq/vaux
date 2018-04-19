@@ -1,16 +1,21 @@
 import PropTypes from "prop-types";
-import moment from "moment";
 
 export const Message = PropTypes.shape({
-   id: PropTypes.string.isRequired,
+   _id: PropTypes.string.isRequired,
    text: PropTypes.string.isRequired,
-   date: PropTypes.instanceOf(moment).isRequired
+   createdAt: PropTypes.instanceOf(Date).isRequired,
+   user: {
+      _id: PropTypes.number.isRequired,
+      name: PropTypes.number.isRequired,
+      avatar: PropTypes.string.isRequired
+   }
 });
 
 export const Thread = PropTypes.shape({
    id: PropTypes.string.isRequired,
    imageURL: PropTypes.string.isRequired,
-   date: PropTypes.instanceOf(moment).isRequired,
-   messages: PropTypes.arrayOf(Message).isRequired,
-   name: PropTypes.string.isRequired
+   lastMessageAt: PropTypes.instanceOf(Date).isRequired,
+   name: PropTypes.string.isRequired,
+   new: PropTypes.bool.isRequired,
+   messageSnippet: PropTypes.string.isRequired
 });

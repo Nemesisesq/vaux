@@ -1,27 +1,54 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, FlatList, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 
 import ThreadItem from "./thread-item";
-import { generateSampleThreads } from "../utils/sample-data";
 import { colors, AppPropTypes } from "../constants";
+import { thread, message } from "../ducks";
 
-export default class ThreadList extends Component {
+// NOTE: sample data, to be removed later
+import {
+   SAMPLE_THREAD_IDS,
+   generateSampleThreads,
+   generateSampleMessages
+} from "../utils/sample-data";
+
+class ThreadList extends Component {
    static propTypes = {
       threads: PropTypes.arrayOf(AppPropTypes.Thread).isRequired
    };
 
    static defaultProps = {
-      // threads: [],
-      threads: generateSampleThreads(10, 1)
+      threads: []
    };
 
-   _rowSelected = notification => {
-      // TODO: open chat thread
+   static navigationOptions = {
+      title: "Messages"
+   };
+
+   componentDidMount() {
+      // TODO: replace with API call
+      const sampleThreads = generateSampleThreads(SAMPLE_THREAD_IDS.length, {
+         threadIds: SAMPLE_THREAD_IDS
+      });
+      this.props.setThreads(sampleThreads);
+      for (let threadId of SAMPLE_THREAD_IDS) {
+         const sampleMessages = generateSampleMessages(10);
+         this.props.setMessagesForThread(threadId, sampleMessages);
+      }
+   }
+
+   _rowSelected = threadId => {
+      this.props.setActiveThread(threadId);
+      this.props.navigation.navigate("Chat");
    };
 
    _renderItem = ({ item }) => {
-      return <ThreadItem thread={item} />;
+      let thread = { ...item };
+      const message = this.props.messages[thread.id][0];
+      thread.messageSnippet = message.text.slice(0, 35);
+      return <ThreadItem thread={thread} onPress={this._rowSelected} />;
    };
 
    _keyExtractor = item => item.id;
@@ -40,13 +67,27 @@ export default class ThreadList extends Component {
    }
 }
 
+function mapStateToProps(state) {
+   return {
+      threads: state.thread.data,
+      messages: state.message.data
+   };
+}
+
+export default connect(mapStateToProps, {
+   setThreads: thread.setThreads,
+   setActiveThread: thread.setActiveThread,
+   setMessagesForThread: message.setMessagesForThread
+})(ThreadList);
+
 const styles = StyleSheet.create({
    TL: {
       flex: 1,
-      alignSelf: "stretch"
+      alignSelf: "stretch",
+      backgroundColor: colors.white
    },
    TL__List: {
       flex: 1,
-      backgroundColor: colors.grey.extraLight
+      backgroundColor: colors.primary.extraFaded
    }
 });

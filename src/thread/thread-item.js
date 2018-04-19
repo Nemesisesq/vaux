@@ -7,40 +7,41 @@ import {
    View,
    TouchableOpacity
 } from "react-native";
+import moment from "moment";
 
 import AppText from "../components/app-text";
 import { colors, AppPropTypes } from "../constants";
 
 export default class ThreadItem extends Component {
    static propTypes = {
-      thread: AppPropTypes.Thread.isRequired
+      thread: AppPropTypes.Thread.isRequired,
+      onPress: PropTypes.func.isRequired
    };
 
    render() {
       const { thread } = this.props;
 
       return (
-         <TouchableOpacity style={styles.TI} onPress={this.props.onPress}>
+         <TouchableOpacity
+            style={styles.TI}
+            onPress={() => this.props.onPress(thread.id)}
+         >
             <View style={styles.TI__ThumbnailWrapper}>
                <Image
                   style={styles.TI__Thumbnail}
                   source={{ uri: thread.imageURL }}
                />
-               {this.props.read && (
-                  <View style={styles.TI__Thumbnail__ReadIcon} />
-               )}
+               {thread.new && <View style={styles.TI__Thumbnail__NewIcon} />}
             </View>
             <View style={styles.TI__Content}>
-               <View style={styles.TI__ContentInner}>
-                  <AppText bold style={styles.Main__Name}>
-                     {thread.name}
-                  </AppText>
-                  <AppText style={styles.Main__Date}>
-                     {thread.date.format("MM/DD/YYYY h:mm a")}
-                  </AppText>
-               </View>
+               <AppText style={styles.Main__Date}>
+                  {moment(thread.lastMessageAt).format("l h:mm a")}
+               </AppText>
+               <AppText bold style={styles.Main__Name}>
+                  {thread.name}
+               </AppText>
                <AppText style={styles.Main__Message}>
-                  {thread.messages[0].text.slice(0, 35)}...
+                  {thread.messageSnippet}...
                </AppText>
             </View>
          </TouchableOpacity>
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
       borderRadius: 25,
       backgroundColor: colors.grey.extraLight
    },
-   TI__Thumbnail__ReadIcon: {
+   TI__Thumbnail__NewIcon: {
       height: 18,
       width: 18,
       borderRadius: 9,
@@ -83,18 +84,13 @@ const styles = StyleSheet.create({
    TI__Content: {
       flex: 1
    },
-   TI__ContentInner: {
-      flexDirection: "row",
-      justifyContent: "space-between"
-   },
    Main__Name: {
-      marginBottom: 5,
       fontSize: 16
    },
    Main__Date: {
-      color: colors.grey.light
+      color: colors.grey.medium
    },
    Main__Message: {
-      color: colors.grey.medium
+      color: colors.primary.faded
    }
 });

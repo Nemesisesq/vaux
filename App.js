@@ -1,23 +1,15 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { Component } from "react";
+import { StatusBar, View } from "react-native";
 
-import ThreadList from "./src/thread/thread-list";
+import Base from "./src";
 
-export default class App extends React.Component {
+export default class App extends Component {
    render() {
       return (
-         <View style={styles.container}>
-            <ThreadList />
+         <View style={{ flex: 1 }}>
+            <StatusBar backgroundColor="transparent" barStyle="light-content" />
+            <Base />
          </View>
       );
    }
 }
-
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center"
-   }
-});

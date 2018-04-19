@@ -1,28 +1,48 @@
 import moment from "moment";
 import faker from "faker";
 
+export const SAMPLE_THREAD_IDS = [
+   faker.random.uuid(),
+   faker.random.uuid(),
+   faker.random.uuid(),
+   faker.random.uuid(),
+   faker.random.uuid(),
+   faker.random.uuid(),
+   faker.random.uuid(),
+   faker.random.uuid(),
+   faker.random.uuid()
+];
+
 export function generateSampleMessages(n = 10) {
    let messages = [];
+   const userId = faker.random.uuid();
+   const userName = faker.name.findName();
+   const userAvatar = faker.image.avatar();
    for (let i = 0; i < n; i++) {
-      let message = {};
-      message.id = faker.random.uuid();
-      message.text = faker.lorem.lines();
-      message.date = moment(faker.date.past());
-      messages.push(message);
+      messages.push({
+         _id: faker.random.uuid(),
+         text: faker.lorem.sentence(),
+         createdAt: moment(faker.date.past()).toDate(),
+         user: {
+            _id: userId,
+            name: userName,
+            avatar: userAvatar
+         }
+      });
    }
    return messages;
 }
 
-export function generateSampleThreads(n = 10, numMessages) {
+export function generateSampleThreads(n = 10, options = { threadIds: [] }) {
    let threads = [];
    for (let i = 0; i < n; i++) {
-      let thread = {};
-      thread.id = faker.random.uuid();
-      thread.date = moment(faker.date.past());
-      thread.name = faker.name.findName();
-      thread.imageURL = faker.image.avatar();
-      thread.messages = generateSampleMessages(numMessages);
-      threads.push(thread);
+      threads.push({
+         id: options.threadIds[i] || faker.random.uuid(),
+         lastMessageAt: new Date(faker.date.past()),
+         name: faker.name.findName(),
+         imageURL: faker.image.avatar(),
+         new: faker.random.boolean()
+      });
    }
    return threads;
 }
