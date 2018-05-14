@@ -34,7 +34,7 @@ class ThreadList extends Component {
       });
       this.props.setThreads(sampleThreads);
       for (let threadId of SAMPLE_THREAD_IDS) {
-         const sampleMessages = generateSampleMessages(10);
+         const sampleMessages = generateSampleMessages(1);
          this.props.setMessagesForThread(threadId, sampleMessages);
       }
    }

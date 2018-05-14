@@ -1,5 +1,11 @@
 import { AsyncStorage } from "react-native";
 
+/*
+ * NOTE: may be useful to utilize `mergeItem` for set saving operations; not
+ * sure way the performance characteristics of merging one item into a large
+ * saved set versus resaving the set though.
+ */
+
 /// The keys of items stored locally
 const STORE_KEYS = {
    INITIALIZED: "@VauxStore:initalized",

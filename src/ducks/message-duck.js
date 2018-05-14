@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 export const ACTIONS = {
    SET_PLAYED_SOUNDS: Symbol("ACTION/MESSAGE/SET_PLAYED_SOUNDS"),
    ADD_PLAYED_SOUND: Symbol("ACTION/MESSAGE/ADD_PLAYED_SOUND"),
-   ADD_MESSAGE: Symbol("ACTION/MESSAGE/ADD_MESSAGE"),
+   ADD_MESSAGES: Symbol("ACTION/MESSAGE/ADD_MESSAGE"),
    SET_MESSAGES_FOR_THREAD: Symbol("ACTION/MESSAGE/SET_MESSAGES_FOR_THREAD")
 };
 
@@ -31,33 +31,47 @@ export function setMessagesForThread(threadId, messages) {
    };
 }
 
-export function addMessage(threadId, message) {
+export function addMessages(threadId, messages) {
    return {
-      type: ACTIONS.ADD_MESSAGE,
-      payload: { threadId, message }
+      type: ACTIONS.ADD_MESSAGES,
+      payload: { threadId, messages }
    };
 }
 
 export default function reducer(state = INITIAL_STATE, action = {}) {
-   let newState = { ...state };
    switch (action.type) {
       case ACTIONS.SET_PLAYED_SOUNDS:
-         newState.playedSounds = action.payload;
-         return newState;
+         return {
+            ...state,
+            playedSounds: action.payload
+         };
       case ACTIONS.ADD_PLAYED_SOUND:
-         newState.playedSounds.add(action.payload);
-         return newState;
-      case ACTIONS.ADD_MESSAGE:
-         // NOTE: may need to create a deep copy here (or explore other
-         // methods, since that would be very expensive)
-         newState.data[action.payload.threadId] =
-            newState.data[action.payload.threadId] || [];
-         newState.data[action.payload.threadId].push(action.payload.message);
-         return newState;
+         let playedSoundsCopy = new Set(state.playedSounds);
+         playedSoundsCopy.add(action.payload);
+         return {
+            ...state,
+            playedSounds: playedSoundsCopy
+         };
+      case ACTIONS.ADD_MESSAGES:
+         return {
+            ...state,
+            data: {
+               ...state.data,
+               [action.payload.threadId]: [
+                  ...action.payload.messages,
+                  ...(state.data[action.payload.threadId] || [])
+               ]
+            }
+         };
       case ACTIONS.SET_MESSAGES_FOR_THREAD:
-         newState.data[action.payload.threadId] = action.payload.messages;
-         return newState;
+         return {
+            ...state,
+            data: {
+               ...state.data,
+               [action.payload.threadId]: [...action.payload.messages]
+            }
+         };
       default:
-         return newState;
+         return { ...state };
    }
 }

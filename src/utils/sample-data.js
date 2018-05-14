@@ -2,17 +2,7 @@ import moment from "moment";
 import faker from "faker";
 
 /// Sample thread ids
-export const SAMPLE_THREAD_IDS = [
-   faker.random.uuid(),
-   faker.random.uuid(),
-   faker.random.uuid(),
-   faker.random.uuid(),
-   faker.random.uuid(),
-   faker.random.uuid(),
-   faker.random.uuid(),
-   faker.random.uuid(),
-   faker.random.uuid()
-];
+export const SAMPLE_THREAD_IDS = [faker.random.uuid()];
 
 /**
  * Generates a URL for a randomly dimensioned placeholder image

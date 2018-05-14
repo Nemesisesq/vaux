@@ -10,14 +10,6 @@ import BackButton from "../components/back-button";
 import MessageIcon from "./message-icon";
 
 class ChatBase extends Component {
-   static propTypes = {
-      messages: PropTypes.arrayOf(AppPropTypes.Message).isRequired
-   };
-
-   static defaultProps = {
-      messages: []
-   };
-
    static navigationOptions = ({ navigation, navigationOptions }) => {
       const { params: { title } = {} } = navigation.state;
       return {
@@ -26,33 +18,42 @@ class ChatBase extends Component {
       };
    };
 
-   state = {
-      messages: this.props.messages
-   };
-
    async componentDidMount() {
       this.props.navigation.setParams({
          // TODO: should be `x.user._id != viewing_user_id`
          title: this.props.messages.find(x => x.user._id != 1).user.name
       });
+      this._playSoundsAsync();
    }
 
    _onSend = (messages = []) => {
-      this.setState(previousState => ({
-         messages: GiftedChat.append(previousState.messages, messages)
-      }));
+      this.props.addMessages(this.props.activeThread, messages);
    };
 
    _renderCustomView(data) {
       return <MessageIcon message={data.currentMessage} />;
    }
 
+   async _playSoundsAsync() {
+      return new Promise((resolve, reject) => {
+         const { messages, playedSounds } = this.props;
+         messages.forEach(message => {
+            if (message.sound && !playedSounds.has(message._id)) {
+               // TODO: actually play the sound
+               console.log(`SOUND TAG: Sound playing for ${message._id}`);
+               this.props.addPlayedSound(message._id);
+            }
+         });
+         resolve(true);
+      });
+   }
+
    render() {
       return (
          <GiftedChat
-            messages={this.state.messages}
+            messages={this.props.messages}
             onSend={this._onSend}
-            user={{ id: 1 }}
+            user={{ _id: 1 }}
             listViewProps={{
                style: {
                   backgroundColor: colors.primary.extraFaded
@@ -65,13 +66,18 @@ class ChatBase extends Component {
 }
 
 function mapStateToProps(state) {
+   console.log("MAP STATE TO PROPS:", state.message);
    return {
-      messages: state.message.data[state.thread.activeThread]
+      activeThread: state.thread.activeThread,
+      messages: state.message.data[state.thread.activeThread],
+      playedSounds: state.message.playedSounds
    };
 }
 
 export default connect(mapStateToProps, {
-   addMessage: message.addMessage
+   addMessages: message.addMessages,
+   addPlayedSound: message.addPlayedSound,
+   setMessagesForThread: message.setMessagesForThread
 })(ChatBase);
 
 const styles = StyleSheet.create({});

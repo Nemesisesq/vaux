@@ -25,15 +25,18 @@ export function setActiveThread(threadId) {
 }
 
 export default function reducer(state = INITIAL_STATE, action = {}) {
-   let newState = { ...state };
    switch (action.type) {
       case ACTIONS.SET_THREADS:
-         newState.data = [...action.payload];
-         return newState;
+         return {
+            ...state,
+            data: [...action.payload]
+         };
       case ACTIONS.SET_ACTIVE_THREAD:
-         newState.activeThread = action.payload;
-         return newState;
+         return {
+            ...state,
+            activeThread: action.payload
+         };
       default:
-         return newState;
+         return { ...state };
    }
 }
