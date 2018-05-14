@@ -19,10 +19,10 @@ export const SAMPLE_THREAD_IDS = [
  * @return {String} the image URL
  */
 function placeholderImageURL() {
-   const baseURL = "http://placeholder.pics/svg";
+   const baseURL = "https://picsum.photos";
    const width = Math.ceil(Math.random() * 300 + 300);
    const height = Math.ceil(Math.random() * 300 + 100);
-   return `${baseURL}/${width}x${height}`;
+   return `${baseURL}/${width}/${height}?random`;
 }
 
 /**
