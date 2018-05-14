@@ -30,7 +30,7 @@ class ChatBase extends Component {
       messages: this.props.messages
    };
 
-   componentDidMount() {
+   async componentDidMount() {
       this.props.navigation.setParams({
          // TODO: should be `x.user._id != viewing_user_id`
          title: this.props.messages.find(x => x.user._id != 1).user.name

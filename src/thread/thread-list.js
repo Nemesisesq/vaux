@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { View, FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
-import ThreadItem from "./thread-item";
 import { colors, AppPropTypes } from "../constants";
 import { thread, message } from "../ducks";
+import ThreadItem from "./thread-item";
 
 // NOTE: sample data, to be removed later
 import {
@@ -37,6 +37,13 @@ class ThreadList extends Component {
          const sampleMessages = generateSampleMessages(10);
          this.props.setMessagesForThread(threadId, sampleMessages);
       }
+   }
+
+   constructor(props) {
+      super(props);
+      this.state = {
+         playedSounds: null
+      };
    }
 
    _rowSelected = threadId => {

@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
       borderRadius: 9,
       backgroundColor: colors.primary.default,
       borderWidth: 3,
-      borderColor: "#fff",
+      borderColor: colors.white,
       alignSelf: "flex-end",
       marginTop: -20,
       marginRight: -7
