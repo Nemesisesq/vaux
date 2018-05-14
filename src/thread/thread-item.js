@@ -15,7 +15,8 @@ import { colors, AppPropTypes } from "../constants";
 export default class ThreadItem extends Component {
    static propTypes = {
       thread: AppPropTypes.Thread.isRequired,
-      onPress: PropTypes.func.isRequired
+      onPress: PropTypes.func.isRequired,
+      messageSnippet: PropTypes.string
    };
 
    render() {
@@ -41,7 +42,7 @@ export default class ThreadItem extends Component {
                   {thread.name}
                </AppText>
                <AppText style={styles.Main__Message}>
-                  {thread.messageSnippet}...
+                  {this.props.messageSnippet}
                </AppText>
             </View>
          </TouchableOpacity>

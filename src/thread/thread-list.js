@@ -46,9 +46,24 @@ class ThreadList extends Component {
 
    _renderItem = ({ item }) => {
       let thread = { ...item };
-      const message = this.props.messages[thread.id][0];
-      thread.messageSnippet = message.text.slice(0, 35);
-      return <ThreadItem thread={thread} onPress={this._rowSelected} />;
+      let messageSnippet = "";
+      const messages = this.props.messages[thread.id];
+      for (let message of messages) {
+         if (message.text) {
+            messageSnippet = message.text.slice(0, 35);
+            if (messageSnippet.length > message.text.length) {
+               messageSnippet += "...";
+            }
+            break;
+         }
+      }
+      return (
+         <ThreadItem
+            thread={thread}
+            onPress={this._rowSelected}
+            messageSnippet={messageSnippet}
+         />
+      );
    };
 
    _keyExtractor = item => item.id;

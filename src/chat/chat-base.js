@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { AppPropTypes, colors } from "../constants";
 import { message } from "../ducks";
 import BackButton from "../components/back-button";
+import MessageIcon from "./message-icon";
 
 class ChatBase extends Component {
    static propTypes = {
@@ -42,6 +43,10 @@ class ChatBase extends Component {
       }));
    };
 
+   _renderCustomView(data) {
+      return <MessageIcon message={data.currentMessage} />;
+   }
+
    render() {
       return (
          <GiftedChat
@@ -53,6 +58,7 @@ class ChatBase extends Component {
                   backgroundColor: colors.primary.extraFaded
                }
             }}
+            renderCustomView={this._renderCustomView}
          />
       );
    }

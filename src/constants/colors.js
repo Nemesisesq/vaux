@@ -5,6 +5,9 @@ const colors = {
       faded: "rgba(223, 47, 94, 0.35)",
       extraFaded: "rgba(223, 47, 94, 0.10)"
    },
+   accent: {
+      default: "rgba(0, 125, 255, 1)"
+   },
    grey: {
       extraLight: "#fafafa",
       light: "#ededed",

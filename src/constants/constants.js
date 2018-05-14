@@ -3,7 +3,7 @@ import colors from "./colors";
 export const navStyles = {
    // dimensions
    buttonMargin: 12,
-   buttonSize: 24,
+   buttonSize: 32,
 
    // full styles
    primary: {

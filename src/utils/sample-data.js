@@ -20,8 +20,8 @@ export const SAMPLE_THREAD_IDS = [
  */
 function placeholderImageURL() {
    const baseURL = "https://picsum.photos";
-   const width = Math.ceil(Math.random() * 300 + 300);
-   const height = Math.ceil(Math.random() * 300 + 100);
+   const width = Math.ceil(Math.random() * 600 + 300);
+   const height = Math.ceil(Math.random() * 400 + 100);
    return `${baseURL}/${width}/${height}?random`;
 }
 
@@ -49,6 +49,11 @@ export function generateSampleMessages(n = 10) {
       // add an image some of the time
       if (faker.random.boolean() && faker.random.boolean()) {
          msg.image = placeholderImageURL();
+         delete msg.text;
+      }
+      // add a sound some of the time
+      if (faker.random.boolean() && faker.random.boolean()) {
+         msg.sound = "/assets/sounds/sample-sound-1.mp3";
       }
       messages.push(msg);
    }

@@ -1,1 +1,1 @@
-export default from "./ChatBase";
+export default from "./chat-base";
