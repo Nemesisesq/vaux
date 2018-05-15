@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { YellowBox, StatusBar, View, Text } from "react-native";
-import { AppLoading } from "expo";
+import { AppLoading, Asset } from "expo";
 import { dispatch, Provider } from "react-redux";
 
 import { store, message } from "./src/ducks";
 import localStore from "./src/utils/local-store";
+import { ASSET_DIR, SOUNDS } from "./src/constants";
 import Base from "./src";
 
 /*
@@ -28,6 +29,7 @@ export default class App extends Component {
 
    // TODO: pre-cache sound assets, fonts, logos, etc.
    async _performAsyncSetup() {
+      // initialize local store and update redux with played sounds
       const initRes = await localStore.initialize();
       const setRes = await localStore.retrieveSet(
          localStore.STORE_KEYS.PLAYED_SOUNDS
@@ -37,6 +39,12 @@ export default class App extends Component {
          return;
       }
       store.dispatch(message.setPlayedSounds(setRes.data));
+
+      // pre-cache sounds
+      const imageAssets = Object.values(SOUNDS).map(sound => {
+         return Asset.fromModule(sound).downloadAsync();
+      });
+      await Promise.all(imageAssets);
    }
 
    render() {

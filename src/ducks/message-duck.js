@@ -19,7 +19,7 @@ export function setPlayedSounds(playedSounds) {
 
 export function addPlayedSound(messageId) {
    return {
-      type: ACTIONS.SET_PLAYED_SOUNDS,
+      type: ACTIONS.ADD_PLAYED_SOUND,
       payload: messageId
    };
 }
@@ -48,6 +48,7 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
       case ACTIONS.ADD_PLAYED_SOUND:
          let playedSoundsCopy = new Set(state.playedSounds);
          playedSoundsCopy.add(action.payload);
+         console.log("PLAYED SOUNDS TAG:", playedSoundsCopy);
          return {
             ...state,
             playedSounds: playedSoundsCopy

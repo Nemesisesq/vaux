@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Audio } from "expo";
 import { StyleSheet, View, Text } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import { connect } from "react-redux";
@@ -35,17 +36,20 @@ class ChatBase extends Component {
    }
 
    async _playSoundsAsync() {
-      return new Promise((resolve, reject) => {
-         const { messages, playedSounds } = this.props;
-         messages.forEach(message => {
-            if (message.sound && !playedSounds.has(message._id)) {
-               // TODO: actually play the sound
+      const { messages, playedSounds } = this.props;
+      for (let message of messages) {
+         if (message.sound && !playedSounds.has(message._id)) {
+            const sound = new Audio.Sound();
+            try {
+               await sound.loadAsync(message.sound);
+               await sound.playAsync();
                console.log(`SOUND TAG: Sound playing for ${message._id}`);
-               this.props.addPlayedSound(message._id);
+            } catch (error) {
+               console.log("SOUND TAG: Error, unable to play sound");
             }
-         });
-         resolve(true);
-      });
+            this.props.addPlayedSound(message._id);
+         }
+      }
    }
 
    render() {

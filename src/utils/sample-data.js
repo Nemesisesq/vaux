@@ -1,6 +1,8 @@
 import moment from "moment";
 import faker from "faker";
 
+import { SOUNDS } from "../constants";
+
 /// Sample thread ids
 export const SAMPLE_THREAD_IDS = [faker.random.uuid()];
 
@@ -43,7 +45,12 @@ export function generateSampleMessages(n = 10) {
       }
       // add a sound some of the time
       if (faker.random.boolean() && faker.random.boolean()) {
-         msg.sound = "/assets/sounds/sample-sound-1.mp3";
+         /*
+          * NOTE: the sound will come in as a string from the API, and must
+          * then use the `SOUNDS` dictionary to find the appropriate module
+          * replacement before being sent to redux.
+          */
+         msg.sound = SOUNDS.SOUND_1;
       }
       messages.push(msg);
    }

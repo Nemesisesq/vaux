@@ -17,3 +17,7 @@ export const navStyles = {
       }
    }
 };
+
+export const SOUNDS = {
+   SOUND_1: require("../../assets/sounds/sample-sound-1.mp3")
+};
