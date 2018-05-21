@@ -19,9 +19,29 @@ export const navStyles = {
 };
 
 export const SOUNDS = {
-   SOUND_1: require("../../assets/sounds/sample-sound-1.mp3"),
-   SOUND_2: require("../../assets/sounds/sample-sound-2.mp3"),
-   SOUND_3: require("../../assets/sounds/sample-sound-3.mp3"),
-   SOUND_4: require("../../assets/sounds/sample-sound-4.mp3"),
-   SOUND_5: require("../../assets/sounds/sample-sound-5.mp3")
+   SOUND_1: {
+      name: "Example Sound 1",
+      module: require("../../assets/sounds/sample-sound-1.mp3"),
+      color: colors.randomColor()
+   },
+   SOUND_2: {
+      name: "Example Sound 2",
+      module: require("../../assets/sounds/sample-sound-2.mp3"),
+      color: colors.randomColor()
+   },
+   SOUND_3: {
+      name: "Example Sound 3",
+      module: require("../../assets/sounds/sample-sound-3.mp3"),
+      color: colors.randomColor()
+   },
+   SOUND_4: {
+      name: "Example Sound 4",
+      module: require("../../assets/sounds/sample-sound-4.mp3"),
+      color: colors.randomColor()
+   },
+   SOUND_5: {
+      name: "Example Sound 5",
+      module: require("../../assets/sounds/sample-sound-5.mp3"),
+      color: colors.randomColor()
+   }
 };

@@ -41,10 +41,10 @@ export default class App extends Component {
       store.dispatch(message.setPlayedSounds(setRes.data));
 
       // pre-cache sounds
-      const imageAssets = Object.values(SOUNDS).map(sound => {
-         return Asset.fromModule(sound).downloadAsync();
+      const soundAssets = Object.values(SOUNDS).map(sound => {
+         return Asset.fromModule(sound.module).downloadAsync();
       });
-      await Promise.all(imageAssets);
+      await Promise.all(soundAssets);
    }
 
    render() {

@@ -17,9 +17,17 @@ export default class MessageIcon extends Component {
          return <View />;
       }
 
+      let iconColor = colors.white;
+      let wrapperColor = colors.accent.default;
+      // NOTE: sound be the is of the user, from auth in redux!
+      if (message.user._id === 1) {
+         iconColor = colors.accent.default;
+         wrapperColor = colors.white;
+      }
+
       return (
-         <View style={styles.MI}>
-            <Icon name="sound" color={colors.white} size={18} />
+         <View style={[styles.MI, { backgroundColor: wrapperColor }]}>
+            <Icon name="sound" color={iconColor} size={18} />
          </View>
       );
    }
@@ -30,7 +38,6 @@ const styles = StyleSheet.create({
       alignSelf: "flex-end",
       marginRight: -5,
       marginTop: -5,
-      backgroundColor: colors.accent.default,
       height: 25,
       width: 25,
       borderRadius: 12.5,

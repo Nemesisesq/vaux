@@ -1,10 +1,17 @@
 import PropTypes from "prop-types";
 
+export const Sound = PropTypes.shape({
+   module: PropTypes.number.isRequired,
+   name: PropTypes.string.isRequired,
+   color: PropTypes.string.isRequired
+});
+
 export const Message = PropTypes.shape({
    _id: PropTypes.string.isRequired,
    text: PropTypes.string,
    image: PropTypes.string,
    createdAt: PropTypes.instanceOf(Date).isRequired,
+   sound: Sound,
    user: {
       _id: PropTypes.number.isRequired,
       name: PropTypes.number.isRequired,

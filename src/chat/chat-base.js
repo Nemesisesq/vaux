@@ -9,6 +9,7 @@ import { AppPropTypes, colors } from "../constants";
 import { message } from "../ducks";
 import BackButton from "../components/back-button";
 import MessageIcon from "./message-icon";
+import SoundPalette from "./sound-palette";
 
 class ChatBase extends Component {
    static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -19,6 +20,13 @@ class ChatBase extends Component {
       };
    };
 
+   constructor(props) {
+      super(props);
+      this.state = {
+         sound: null
+      };
+   }
+
    async componentDidMount() {
       this.props.navigation.setParams({
          // TODO: should be `x.user._id != viewing_user_id`
@@ -28,12 +36,30 @@ class ChatBase extends Component {
    }
 
    _onSend = (messages = []) => {
+      messages = messages.map(msg => {
+         msg.sound = this.state.sound;
+         return msg;
+      });
+      this.setState({ sound: null });
       this.props.addMessages(this.props.activeThread, messages);
+   };
+
+   _onSelection = sound => {
+      this.setState({ sound });
    };
 
    _renderCustomView(data) {
       return <MessageIcon message={data.currentMessage} />;
    }
+
+   _renderActions = data => {
+      return (
+         <SoundPalette
+            activeSound={this.state.sound}
+            onSelection={this._onSelection}
+         />
+      );
+   };
 
    async _playSoundsAsync() {
       const { messages, playedSounds } = this.props;
@@ -41,9 +67,8 @@ class ChatBase extends Component {
          if (message.sound && !playedSounds.has(message._id)) {
             const sound = new Audio.Sound();
             try {
-               await sound.loadAsync(message.sound);
+               await sound.loadAsync(message.sound.module);
                await sound.playAsync();
-               console.log(`SOUND TAG: Sound playing for ${message._id}`);
             } catch (error) {
                console.log("SOUND TAG: Error, unable to play sound");
             }
@@ -55,6 +80,7 @@ class ChatBase extends Component {
    render() {
       return (
          <GiftedChat
+            renderActions={this._renderActions}
             messages={this.props.messages}
             onSend={this._onSend}
             user={{ _id: 1 }}
@@ -70,7 +96,6 @@ class ChatBase extends Component {
 }
 
 function mapStateToProps(state) {
-   console.log("MAP STATE TO PROPS:", state.message);
    return {
       activeThread: state.thread.activeThread,
       messages: state.message.data[state.thread.activeThread],
