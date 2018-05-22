@@ -1,5 +1,3 @@
-import { generateSampleThreads } from "../utils/sample-data";
-
 const INITIAL_STATE = {
    data: [],
    activeThread: null

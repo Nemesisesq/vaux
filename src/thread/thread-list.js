@@ -4,8 +4,10 @@ import { View, FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { colors, AppPropTypes } from "../constants";
+import { SocketHelper } from "../networking";
 import { thread, message } from "../ducks";
 import ThreadItem from "./thread-item";
+import ListEmpty from "../components/list-empty";
 
 // NOTE: sample data, to be removed later
 import {
@@ -28,15 +30,23 @@ class ThreadList extends Component {
    };
 
    componentDidMount() {
-      // TODO: replace with API call
-      const sampleThreads = generateSampleThreads(SAMPLE_THREAD_IDS.length, {
-         threadIds: SAMPLE_THREAD_IDS
-      });
-      this.props.setThreads(sampleThreads);
-      for (let threadId of SAMPLE_THREAD_IDS) {
-         const sampleMessages = generateSampleMessages(5);
-         this.props.setMessagesForThread(threadId, sampleMessages);
-      }
+      const { socketHelper } = this.props;
+      socketHelper.subscribe("threads", this._receivedThreads);
+
+      // NOTE: uncomment to populate with sample data
+      // const sampleThreads = generateSampleThreads(SAMPLE_THREAD_IDS.length, {
+      //    threadIds: SAMPLE_THREAD_IDS
+      // });
+      // this.props.setThreads(sampleThreads);
+      // for (let threadId of SAMPLE_THREAD_IDS) {
+      //    const sampleMessages = generateSampleMessages(5);
+      //    this.props.setMessagesForThread(threadId, sampleMessages);
+      // }
+   }
+
+   componentWillUnmount() {
+      const { socketHelper } = this.props;
+      socketHelper.unsubscribe("threads", this._receivedThreads);
    }
 
    constructor(props) {
@@ -45,6 +55,10 @@ class ThreadList extends Component {
          playedSounds: null
       };
    }
+
+   _receivedThreads = data => {
+      console.log(data);
+   };
 
    _rowSelected = threadId => {
       this.props.setActiveThread(threadId);
@@ -76,14 +90,22 @@ class ThreadList extends Component {
    _keyExtractor = item => item.id;
 
    render() {
+      if (this.props.threads.length) {
+         return (
+            <View style={styles.TL}>
+               <FlatList
+                  style={styles.TL__List}
+                  data={this.props.threads}
+                  keyExtractor={this._keyExtractor}
+                  renderItem={this._renderItem}
+               />
+            </View>
+         );
+      }
+
       return (
          <View style={styles.TL}>
-            <FlatList
-               style={styles.TL__List}
-               data={this.props.threads}
-               keyExtractor={this._keyExtractor}
-               renderItem={this._renderItem}
-            />
+            <ListEmpty text="No message threads 😭" />
          </View>
       );
    }
@@ -92,7 +114,8 @@ class ThreadList extends Component {
 function mapStateToProps(state) {
    return {
       threads: state.thread.data,
-      messages: state.message.data
+      messages: state.message.data,
+      socketHelper: state.networking.socketHelper
    };
 }
 

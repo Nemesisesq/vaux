@@ -18,6 +18,8 @@ export const navStyles = {
    }
 };
 
+export const BASE_URL = "ws://0.0.0.0:8080";
+
 export const SOUNDS = {
    SOUND_1: {
       name: "Example Sound 1",
