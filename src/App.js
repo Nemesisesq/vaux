@@ -8,6 +8,9 @@ import localStore from "./utils/local-store";
 import {ASSET_DIR, SOUNDS, BASE_URL} from "./constants/index";
 import Base from "./index";
 import ErrorScreen from "./components/error-screen";
+import {Auth} from "aws-amplify/lib/index";
+import axios from 'axios';
+import {hostUri} from "./config";
 
 /*
  * ignore react-native core warnings; these are irrelevant, as per here:
@@ -30,6 +33,38 @@ class App extends Component {
         };
     }
 
+    _getUser = async () => {
+        let user = await Auth.currentAuthenticatedUser();
+
+        let data = {
+            ...user.signInUserSession.idToken.payload,
+            jwtToken: user.signInUserSession.idToken.jwtToken
+        };
+
+        debugger
+        userPayload = {name: "", email: "", profile: ""};
+
+
+        await axios({
+            url: `http://${hostUri}/users`,
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            data: data
+        })
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+        return user;
+    };
+
+
     // TODO: pre-cache sound assets, fonts, logos, etc.
     _performAsyncSetup = async () => {
         // initialize local store and update redux with played sounds
@@ -44,6 +79,9 @@ class App extends Component {
         }
 
         store.dispatch(message.setPlayedSounds(setRes.data));
+
+
+        const user = await this._getUser();
 
         debugger;
         await store.dispatch(networking.connect(`ws://${BASE_URL}/connect`));

@@ -2,9 +2,9 @@ import * as expo from "expo";
 
 const ENV = {
    dev: {
-      apiUrl:"stormy-brook-47676.herokuapp.com",
+      // apiUrl:"stormy-brook-47676.herokuapp.com",
        facebookAppID : '196693064273005',
-      // apiUrl: "localhost:7070",
+      apiUrl: "localhost:3000",
       //  apiUrl: "flexable.ngrok.io"
    },
    staging: {
