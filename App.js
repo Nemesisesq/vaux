@@ -18,41 +18,9 @@ class App extends Component {
         };
     }
 
-    _getUser = async () => {
-        let user = await Auth.currentAuthenticatedUser();
-
-        let data = {
-            ...user.signInUserSession.idToken.payload,
-            jwtToken: user.signInUserSession.idToken.jwtToken
-        };
-
-
-        user = {name: "", email: "", profile: ""};
-
-
-        await axios({
-            url: `http://${hostUri}/user`,
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            data: data
-        })
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-        return user;
-    };
-
-
+    
 
     render() {
-
         return (
                 <Main/>
 
@@ -61,4 +29,4 @@ class App extends Component {
 }
 
 
-export default App;
+export default withAuthenticator(App);
