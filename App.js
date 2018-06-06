@@ -5,6 +5,7 @@ import Amplify, {Auth} from 'aws-amplify';
 import {withAuthenticator} from './src/utils/utils.withAuthenticator';
 import awsmobile from './src/aws-exports';
 import {hostUri} from "./src/config";
+import {Button, View} from "react-native";
 
 Amplify.configure(awsmobile);
 
@@ -48,6 +49,10 @@ class App extends Component {
         return user;
     };
 
+    _signOut = () => {
+        Auth.signOut()
+    }
+
 
     render() {
 
@@ -59,4 +64,4 @@ class App extends Component {
 }
 
 
-export default App;
+export default withAuthenticator(App);
