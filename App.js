@@ -49,9 +49,6 @@ class App extends Component {
         return user;
     };
 
-    _signOut = () => {
-        Auth.signOut()
-    }
 
 
     render() {
@@ -64,4 +61,4 @@ class App extends Component {
 }
 
 
-export default withAuthenticator(App);
+export default App;
