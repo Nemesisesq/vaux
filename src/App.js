@@ -41,7 +41,6 @@ class App extends Component {
             jwtToken: user.signInUserSession.idToken.jwtToken
         };
 
-        debugger
         userPayload = {name: "", email: "", profile: ""};
 
 
@@ -55,11 +54,9 @@ class App extends Component {
             },
         })
             .then(response => {
-                debugger
                 console.log(response)
             })
             .catch(error => {
-                debugger
                 console.log(error);
             });
 
@@ -83,10 +80,12 @@ class App extends Component {
         store.dispatch(message.setPlayedSounds(setRes.data));
 
 
-        const user = await this._getUser();
+        await this._getUser();
 
         debugger;
-        await store.dispatch(networking.connect(`ws://${BASE_URL}/connect`));
+        await store.dispatch(networking.connect(`ws://${hostUri}/connect`));
+
+        debugger
         const {error} = store.getState().networking;
         if (error) {
             this.setState({error});

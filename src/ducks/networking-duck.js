@@ -13,6 +13,8 @@ const ACTIONS = {
 
 export async function connect(url) {
    const sh = new SocketHelper();
+
+   debugger
    const success = await sh.connectAsync(url);
 
    if (success) {

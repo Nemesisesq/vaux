@@ -31,6 +31,7 @@ export default class SocketHelper {
     * @param  {String} url the url to connect to
     */
    async connectAsync(url) {
+       debugger
       const success = await new Promise((resolve, reject) => {
          this.ws = new WebSocket(url);
          this.ws.addEventListener("open", () => resolve(true));
@@ -39,6 +40,8 @@ export default class SocketHelper {
             resolve(false);
          });
       });
+
+
       if (success) {
          this.ws.addEventListener("message", this._onMessage.bind(this));
       }
