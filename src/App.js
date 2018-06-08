@@ -46,19 +46,20 @@ class App extends Component {
 
 
         await axios({
-            url: `http://${hostUri}/users`,
+            url: `http://${hostUri}/verify`,
             method: "GET",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
                 Authorization: data.jwtToken
             },
-            data: data
         })
             .then(response => {
+                debugger
                 console.log(response)
             })
             .catch(error => {
+                debugger
                 console.log(error);
             });
 
