@@ -1,8 +1,10 @@
 import { SocketHelper } from "../networking";
+import {SET_USER} from "../utils/types";
 
 const INITIAL_STATE = {
    socketHelper: null,
-   error: null
+   error: null,
+    user: null
 };
 
 const ACTIONS = {
@@ -14,7 +16,6 @@ const ACTIONS = {
 export async function connect(url) {
    const sh = new SocketHelper();
 
-   debugger
    const success = await sh.connectAsync(url);
 
    if (success) {
@@ -35,6 +36,13 @@ export async function disconnect() {
       type: CLEAR_SOCKET_HELPER,
       payload: true
    };
+}
+
+export async function setUser(user) {
+   return {
+      type: SET_USER,
+       payload: user
+   }
 }
 
 export default function reducer(state = INITIAL_STATE, action = {}) {
@@ -58,6 +66,11 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
             socketHelper: null,
             error: action.payload
          };
+       case SET_USER:
+          return {
+              ...state,
+              user: action.payload
+          }
       default:
          return { ...state };
    }

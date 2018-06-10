@@ -12,9 +12,14 @@ const rootReducer = combineReducers({
    networking: networkingReducer
 });
 
+const middleware = [
+    promiseMiddleware,
+    localStoreMiddleware,
+]
+
 export const store = createStore(
    rootReducer,
-   applyMiddleware(promiseMiddleware, localStoreMiddleware)
+   applyMiddleware(...middleware)
 );
 
 export * as thread from "./thread-duck";

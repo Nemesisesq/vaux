@@ -11,6 +11,7 @@ import ErrorScreen from "./components/error-screen";
 import {Auth} from "aws-amplify/lib/index";
 import axios from 'axios';
 import {hostUri} from "./config";
+import {setUser} from "./ducks/networking-duck";
 
 /*
  * ignore react-native core warnings; these are irrelevant, as per here:
@@ -21,7 +22,6 @@ YellowBox.ignoreWarnings([
     "Warning: componentWillUpdate is deprecated",
     "Warning: componentWillReceiveProps is deprecated"
 ]);
-
 
 
 class App extends Component {
@@ -79,13 +79,12 @@ class App extends Component {
 
         store.dispatch(message.setPlayedSounds(setRes.data));
 
+        const user = await this._getUser();
+        store.dispatch(setUser(user));
 
-        await this._getUser();
-
-        debugger;
         await store.dispatch(networking.connect(`ws://${hostUri}/connect`));
 
-        debugger
+
         const {error} = store.getState().networking;
         if (error) {
             this.setState({error});
@@ -120,15 +119,13 @@ class App extends Component {
             return <ErrorScreen text={this.state.error}/>;
         }
 
-        debugger
-
         return (
-                <View style={{flex: 1}}>
-                    <StatusBar backgroundColor="transparent" barStyle="light-content"/>
-                    <Provider store={store}>
-                        <Base/>
-                    </Provider>
-                </View>
+            <View style={{flex: 1}}>
+                <StatusBar backgroundColor="transparent" barStyle="light-content"/>
+                <Provider store={store}>
+                    <Base/>
+                </Provider>
+            </View>
         );
     }
 }
