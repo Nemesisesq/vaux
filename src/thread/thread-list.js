@@ -11,14 +11,7 @@ import FAB from 'react-native-fab';
 import {Icon} from 'native-base';
 import {Data, Thread} from '../utils';
 import Chance from 'chance';
-
-// NOTE: sample data, to be removed later
-import {
-    SAMPLE_THREAD_IDS,
-    generateSampleThreads,
-    generateSampleMessages
-} from "../utils/sample-data";
-import {CREATE_THREAD, SET_USER} from "../utils/types";
+import {CREATE_THREAD, SET_USER, SET_ACTIVE_THREAD} from "../utils/types";
 
 class ThreadList extends Component {
     static propTypes = {
@@ -34,6 +27,14 @@ class ThreadList extends Component {
 
 
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            playedSounds: null
+        };
+    }
+
     _addThread = () => {
         const {socketHelper} = this.props;
         const chance = new Chance();
@@ -67,13 +68,6 @@ class ThreadList extends Component {
 
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            playedSounds: null
-        };
-    }
-
     _receivedThreads = data => {
 
         data.payload && this.props.setThreads(data.payload);
@@ -81,7 +75,12 @@ class ThreadList extends Component {
     };
 
     _rowSelected = threadId => {
+        const {socketHelper} = this.props;
+
+        const data = new Data(SET_ACTIVE_THREAD, threadId.id, null)
+        socketHelper.ws.send(data.json());
         this.props.setActiveThread(threadId);
+
         this.props.navigation.navigate("Chat");
     };
 
