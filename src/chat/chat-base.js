@@ -10,6 +10,8 @@ import {message} from "../ducks";
 import BackButton from "../components/back-button";
 import MessageIcon from "./message-icon";
 import SoundPalette from "./sound-palette";
+import {Data} from "../utils";
+import {ADD_MESSAGE} from "../utils/types";
 
 class ChatBase extends Component {
     static navigationOptions = ({navigation, navigationOptions}) => {
@@ -29,7 +31,7 @@ class ChatBase extends Component {
 
     async componentDidMount() {
         const {socketHelper} = this.props;
-        socketHelper.subscribe(`thread.${this.props.activeThread._id}`,  this._receiveMessage);
+        socketHelper.subscribe(ADD_MESSAGE, this._receiveMessage);
         this.props.navigation.setParams({
             // TODO: should be `x.user._id != viewing_user_id`
             title: this.props.messages.find(x => x.user._id != 1).user.name
@@ -39,25 +41,28 @@ class ChatBase extends Component {
 
     componentWillUnmount() {
         const {socketHelper} = this.props;
-        socketHelper.subscribe(`thread.${this.props.activeThread.id}`,  this._receiveMessage);
+        socketHelper.subscribe(`thread.${this.props.activeThread}`, this._receiveMessage);
     }
 
     _receiveMessage = data => {
+        debugger
+
+        this.props.addMessages(data.thread_id, data.payload)
         console.log(data)
     }
 
     _onSend = (messages = []) => {
 
-        debugger
         const {socketHelper} = this.props;
         messages = messages.map(msg => {
             msg.sound = this.state.sound;
             return msg;
         });
         this.setState({sound: null});
+        debugger
         this.props.addMessages(this.props.activeThread, messages);
 
-        const data = new Data(ADD_MESSAGE, messages, this.props.activeThread.id );
+        const data = new Data(ADD_MESSAGE, messages, this.props.activeThread);
         socketHelper.ws.send(data.json())
     };
 

@@ -92,7 +92,6 @@ export default class SocketHelper {
      */
     _onMessage(e) {
         const data = JSON.parse(e.data);
-        // console.log(data);
         (this._handlers[data.type] || []).map(handler => {
             handler(data);
         });

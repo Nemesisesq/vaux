@@ -88,7 +88,6 @@ class ThreadList extends Component {
         let thread = {...item};
         let messageSnippet = "";
         const messages = this.props.messages[thread.id] || []
-        debugger
 
         if (messages.length > 0) {
 
