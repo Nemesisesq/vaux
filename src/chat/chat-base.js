@@ -41,12 +41,12 @@ class ChatBase extends Component {
 
     componentWillUnmount() {
         const {socketHelper} = this.props;
-        socketHelper.subscribe(`thread.${this.props.activeThread}`, this._receiveMessage);
+        socketHelper.unsubscribe(`thread.${this.props.activeThread}`, this._receiveMessage);
+        socketHelper.unsubscribe(ADD_MESSAGE, this._receiveMessage);
     }
 
     _receiveMessage = data => {
         debugger
-
         this.props.addMessages(data.thread_id, data.payload)
         console.log(data)
     }
@@ -59,7 +59,6 @@ class ChatBase extends Component {
             return msg;
         });
         this.setState({sound: null});
-        debugger
         this.props.addMessages(this.props.activeThread, messages);
 
         const data = new Data(ADD_MESSAGE, messages, this.props.activeThread);
@@ -106,6 +105,7 @@ class ChatBase extends Component {
                 messages={this.props.messages}
                 onSend={this._onSend}
                 user={{_id: 1}}
+                keyboardShouldPersistTaps={'never'}
                 listViewProps={{
                     style: {
                         backgroundColor: colors.primary.extraFaded

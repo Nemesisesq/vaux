@@ -2,17 +2,17 @@ import * as expo from "expo";
 
 const ENV = {
    dev: {
-      // apiUrl:"stormy-brook-47676.herokuapp.com",
-       facebookAppID : '196693064273005',
-      apiUrl: "localhost:3000",
-      //  apiUrl: "flexable.ngrok.io"
+      // apiUrl:"infinite-chamber-75377.herokuapp.com/",
+      //  facebookAppID : '196693064273005',
+      // apiUrl: "localhost:3000",
+       apiUrl: "vaux.ngrok.io"
    },
    staging: {
-      apiUrl: "stormy-brook-47676.herokuapp.com",
+      apiUrl: "infinite-chamber-75377.herokuapp.com/",
        facebookAppID : '196693064273005'
    },
    prod: {
-       apiUrl: "myflexable.com",
+       apiUrl: "infinite-chamber-75377.herokuapp.com/",
        facebookAppID : '196693064273005'
    }
 };
@@ -29,7 +29,7 @@ function getEnvVars(env = "") {
 
 export const envVars = getEnvVars(expo.Constants.manifest.releaseChannel);
 export const hostUri = envVars.apiUrl;
-export const facebookAppID = envVars.facebookAppID
+// export const facebookAppID = envVars.facebookAppID
 
 // Application colors
 export const colors = {

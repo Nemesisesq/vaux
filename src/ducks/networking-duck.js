@@ -1,6 +1,6 @@
 import { SocketHelper } from "../networking";
 import {SET_USER} from "../utils/types";
-
+import Symbol from 'es6-symbol';
 const INITIAL_STATE = {
    socketHelper: null,
    error: null,

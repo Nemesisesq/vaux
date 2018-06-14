@@ -1,3 +1,4 @@
+import Symbol from 'es6-symbol';
 const INITIAL_STATE = {
    data: {},
    playedSounds: null
