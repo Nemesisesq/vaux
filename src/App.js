@@ -10,7 +10,7 @@ import Base from "./index";
 import ErrorScreen from "./components/error-screen";
 import {Auth} from "aws-amplify/lib/index";
 import axios from 'axios';
-import {hostUri} from "./config";
+import {hostUri, protocol} from "./config";
 import {setUser} from "./ducks/networking-duck";
 
 /*
@@ -45,7 +45,7 @@ class App extends Component {
 
 
         await axios({
-            url: `http://${hostUri}/verify`,
+            url: `${protocol.http}${hostUri}/verify`,
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -82,7 +82,7 @@ class App extends Component {
         const user = await this._getUser();
         store.dispatch(setUser(user));
 
-        await store.dispatch(networking.connect(`ws://${hostUri}/connect`));
+        await store.dispatch(networking.connect(`${protocol.ws}${hostUri}/connect`));
 
 
         const {error} = store.getState().networking;

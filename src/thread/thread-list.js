@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {View, FlatList, StyleSheet, Button} from "react-native";
 import {connect} from "react-redux";
-
+import {Auth} from 'aws-amplify';
 import {colors, AppPropTypes} from "../constants";
 import {thread, message} from "../ducks";
 import ThreadItem from "./thread-item";
@@ -24,6 +24,15 @@ class ThreadList extends Component {
 
     static navigationOptions = {
         title: "Messages",
+        headerRight: (
+            <Button
+                onPress={() => {
+                    Auth.signOut()
+                }}
+                title="Logout"
+                color="#fff"
+            />
+        )
 
 
     };
@@ -47,6 +56,7 @@ class ThreadList extends Component {
     componentDidMount() {
         const {socketHelper} = this.props;
         socketHelper.subscribe("threads", this._receivedThreads);
+        // socketHelper.subscribe("bad_user", this._badUser);
         const data = new Data(SET_USER, this.props.email, null);
         socketHelper.ws.send(data.json())
 
@@ -135,6 +145,11 @@ class ThreadList extends Component {
                      iconTextComponent={<Icon name="add"/>}/>
             </View>
         );
+    }
+
+    static _badUser() {
+        Auth.signOut();
+        Expo.reload();
     }
 }
 

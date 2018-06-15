@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {Audio} from "expo";
-import {StyleSheet, View, Text} from "react-native";
+import {StyleSheet, View, Text, KeyboardAvoidingView, Platform} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
 import {connect} from "react-redux";
 
@@ -12,6 +12,7 @@ import MessageIcon from "./message-icon";
 import SoundPalette from "./sound-palette";
 import {Data} from "../utils";
 import {ADD_MESSAGE} from "../utils/types";
+
 
 class ChatBase extends Component {
     static navigationOptions = ({navigation, navigationOptions}) => {
@@ -99,20 +100,26 @@ class ChatBase extends Component {
     }
 
     render() {
+        const android = <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={80}/>
+
         return (
-            <GiftedChat
-                renderActions={this._renderActions}
-                messages={this.props.messages}
-                onSend={this._onSend}
-                user={{_id: 1}}
-                keyboardShouldPersistTaps={'never'}
-                listViewProps={{
-                    style: {
-                        backgroundColor: colors.primary.extraFaded
-                    }
-                }}
-                renderCustomView={this._renderCustomView}
-            />
+            <View style={{flex: 1}}>
+                <GiftedChat
+                    renderActions={this._renderActions}
+                    messages={this.props.messages}
+                    onSend={this._onSend}
+                    user={{_id: 1}}
+                    keyboardShouldPersistTaps={'never'}
+                    listViewProps={{
+                        style: {
+                            backgroundColor: colors.primary.extraFaded
+                        }
+                    }}
+                    renderCustomView={this._renderCustomView}
+                />
+
+                {Platform.OS === 'android' && android}
+            </View>
         );
     }
 }

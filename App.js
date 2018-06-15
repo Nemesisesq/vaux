@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import Main from "./src/App"
-
 import Amplify from 'aws-amplify';
 import {withAuthenticator} from './src/utils/utils.withAuthenticator';
 import awsmobile from './src/aws-exports';
@@ -22,7 +21,6 @@ class App extends Component {
     render() {
         return (
                 <Main/>
-
         );
     }
 }
