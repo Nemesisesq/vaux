@@ -100,13 +100,16 @@ class ChatBase extends Component {
     }
 
     render() {
+        const { navigation } = this.props;
+        const messages = navigation.getParam('messages', []);
+
         const android = <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={80}/>
 
         return (
             <View style={{flex: 1}}>
                 <GiftedChat
                     renderActions={this._renderActions}
-                    messages={this.props.messages}
+                    messages={messages}
                     onSend={this._onSend}
                     user={{_id: 1}}
                     keyboardShouldPersistTaps={'never'}

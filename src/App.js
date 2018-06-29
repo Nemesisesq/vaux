@@ -8,10 +8,8 @@ import localStore from "./utils/local-store";
 import {ASSET_DIR, SOUNDS, BASE_URL} from "./constants/index";
 import Base from "./index";
 import ErrorScreen from "./components/error-screen";
-import {Auth} from "aws-amplify/lib/index";
 import axios from 'axios';
 import {hostUri, protocol} from "./config";
-import {setUser} from "./ducks/networking-duck";
 
 /*
  * ignore react-native core warnings; these are irrelevant, as per here:
@@ -34,14 +32,7 @@ class App extends Component {
     }
 
     _getUser = async () => {
-        let user = await Auth.currentAuthenticatedUser();
 
-        let data = {
-            ...user.signInUserSession.idToken.payload,
-            jwtToken: user.signInUserSession.idToken.jwtToken
-        };
-
-        userPayload = {name: "", email: "", profile: ""};
 
 
         await axios({
@@ -79,8 +70,8 @@ class App extends Component {
 
         store.dispatch(message.setPlayedSounds(setRes.data));
 
-        const user = await this._getUser();
-        store.dispatch(setUser(user));
+        // const user = await this._getUser();
+        // store.dispatch(setUser(user));
 
         await store.dispatch(networking.connect(`${protocol.ws}${hostUri}/connect`));
 
@@ -122,9 +113,7 @@ class App extends Component {
         return (
             <View style={{flex: 1}}>
                 <StatusBar backgroundColor="transparent" barStyle="light-content"/>
-                <Provider store={store}>
-                    <Base/>
-                </Provider>
+                <Base/>
             </View>
         );
     }

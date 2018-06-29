@@ -7,24 +7,14 @@
 // AWS Mobile Hub Project Constants
 const awsmobile = {
     'aws_app_analytics': 'enable',
-    'aws_cognito_identity_pool_id': 'us-east-2:dcead2d6-75e0-4b63-b681-76c72f14e1e9',
-    'aws_cognito_region': 'us-east-2',
-    'aws_content_delivery': 'enable',
-    'aws_content_delivery_bucket': 'vaux-hosting-mobilehub-348975445',
-    'aws_content_delivery_bucket_region': 'us-east-2',
-    'aws_content_delivery_cloudfront': 'enable',
-    'aws_content_delivery_cloudfront_domain': 'd35q7tzvth0s5f.cloudfront.net',
-    'aws_mobile_analytics_app_id': 'cbb1605df8a345cf9d2015323920fcb6',
+    'aws_cognito_identity_pool_id': 'us-east-1:37990848-970b-4a93-a537-1a5584429ca3',
+    'aws_cognito_region': 'us-east-1',
+    'aws_mobile_analytics_app_id': '1d82363cd01d417ca5fe3233595ff680',
     'aws_mobile_analytics_app_region': 'us-east-1',
-    'aws_project_id': '0048c24a-5d06-487b-8c7f-c1876aa192e9',
-    'aws_project_name': 'vaux-2018-06-04-20-52-16',
-    'aws_project_region': 'us-east-2',
-    'aws_resource_name_prefix': 'vaux-mobilehub-348975445',
-    'aws_sign_in_enabled': 'enable',
-    'aws_user_pools': 'enable',
-    'aws_user_pools_id': 'us-east-2_pLk5Akmxu',
-    'aws_user_pools_mfa_type': 'ON',
-    'aws_user_pools_web_client_id': '3iinembeotid80rsm9gcoboi6p',
+    'aws_project_id': 'ab28d481-c879-437a-adaf-9f9d5b698f11',
+    'aws_project_name': 'vaux ',
+    'aws_project_region': 'us-east-1',
+    'aws_resource_name_prefix': 'vaux-mobilehub-167575792',
 }
 
 export default awsmobile;

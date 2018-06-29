@@ -1,5 +1,18 @@
 {
   "expo": {
-    "sdkVersion": "26.0.0"
+    "sdkVersion": "26.0.0",
+    "name": "VAUX",
+    "orientation": "portrait",
+    "slug": "expo-vaux-vauxiliary",
+    "version": "0.1",
+    "ios": {
+      "bundleIdentifier": "com.vaux.expo",
+      "buildNumber" : "0.0.1",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.vauxilary.expo",
+      "versionCode" : 1
+    }
   }
 }

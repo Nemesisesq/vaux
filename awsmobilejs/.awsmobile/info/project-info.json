@@ -1,19 +1,19 @@
 {
 	"ProjectName": "vaux",
 	"ProjectPath": "/Users/nem/vaux/vaux",
-	"InitializationTime": "2018-06-04-20-52-51",
-	"LastConfigurationTime": "2018-06-04-20-52-16",
+	"InitializationTime": "2018-06-28-21-41-03",
+	"LastConfigurationTime": "2018-06-28-21-40-25",
 	"LastNPMInstallTime": "",
 	"FrontendLastBuildTime": "",
 	"LastPublishTime": "",
-	"BackendLastSyncTime": "2018-06-04-21-52-16",
+	"BackendLastSyncTime": "2018-06-28-21-46-17",
 	"BackendLastBuildTime": "2018-06-04-21-51-55",
 	"BackendLastPushTime": "2018-06-04-21-52-11",
-	"BackendProjectID": "0048c24a-5d06-487b-8c7f-c1876aa192e9",
-	"BackendProjectName": "vaux-2018-06-04-20-52-16",
-	"BackendProjectConsoleUrl": "https://console.aws.amazon.com/mobilehub/home#/0048c24a-5d06-487b-8c7f-c1876aa192e9/build",
-	"BackendProjectCreationTime": "2018-06-05T00:52:19.437Z",
-	"BackendProjectLastUpdatedTime": "2018-06-05T01:52:10.500Z",
+	"BackendProjectID": "ab28d481-c879-437a-adaf-9f9d5b698f11",
+	"BackendProjectName": "vaux ",
+	"BackendProjectConsoleUrl": "https://console.aws.amazon.com/mobilehub/home#/ab28d481-c879-437a-adaf-9f9d5b698f11/build",
+	"BackendProjectCreationTime": "2018-06-29T01:39:59.189Z",
+	"BackendProjectLastUpdatedTime": "2018-06-29T01:40:06.140Z",
 	"Framework": "react-native",
-	"BackendLastSyncToDevTime": "2018-06-04-21-52-16"
+	"BackendLastSyncToDevTime": "2018-06-28-21-46-21"
 }

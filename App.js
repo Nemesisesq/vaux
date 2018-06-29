@@ -1,11 +1,10 @@
 import React, {Component} from "react";
 import Main from "./src/App"
-import Amplify from 'aws-amplify';
-import {withAuthenticator} from './src/utils/utils.withAuthenticator';
-import awsmobile from './src/aws-exports';
+import Auth from "./src/auth";
+import {store} from "./src/ducks";
+import {Provider} from "react-redux";
 
 
-Amplify.configure(awsmobile);
 
 class App extends Component {
     constructor(props) {
@@ -17,13 +16,16 @@ class App extends Component {
     }
 
 
-
     render() {
         return (
-                <Main/>
+            <Provider store={store}>
+                <Auth>
+                    <Main/>
+                </Auth>
+            </Provider>
         );
     }
 }
 
 
-export default withAuthenticator(App);
+export default App;
