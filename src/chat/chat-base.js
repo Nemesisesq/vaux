@@ -52,7 +52,6 @@ class ChatBase extends Component {
     }
 
     _onSend = (messages = []) => {
-
         const {socketHelper} = this.props;
         messages = messages.map(msg => {
             msg.sound = this.state.sound;
@@ -60,7 +59,6 @@ class ChatBase extends Component {
         });
         this.setState({sound: null});
         this.props.addMessages(this.props.activeThread, messages);
-
         const data = new Data(ADD_MESSAGE, messages, this.props.activeThread);
         socketHelper.ws.send(data.json())
     };
@@ -99,18 +97,19 @@ class ChatBase extends Component {
     }
 
     render() {
-        const { navigation } = this.props;
-        const messages = navigation.getParam('messages', []);
+        const { navigation, messages, user} = this.props;
+        // const messages = navigation.getParam('messages', []);
 
         const android = <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={80}/>
 
+        debugger;
         return (
             <View style={{flex: 1}}>
                 <GiftedChat
                     renderActions={this._renderActions}
                     messages={messages}
                     onSend={this._onSend}
-                    user={{_id: 1}}
+                    user={{_id: user.id}}
                     keyboardShouldPersistTaps={'never'}
                     listViewProps={{
                         style: {
@@ -131,7 +130,8 @@ function mapStateToProps(state) {
         activeThread: state.thread.activeThread,
         messages: state.message.data[state.thread.activeThread],
         socketHelper: state.networking.socketHelper,
-        playedSounds: state.message.playedSounds
+        playedSounds: state.message.playedSounds,
+        user: state.networking.user.id
     };
 }
 

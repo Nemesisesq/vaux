@@ -48,7 +48,7 @@ class ThreadList extends Component {
         const {socketHelper} = this.props;
         const chance = new Chance();
         console.log("pressed");
-        let t  = new Thread("", chance.word());
+        let t = new Thread("", chance.word());
         const data = new Data(CREATE_THREAD, t.toJson(), null);
         socketHelper.ws.send(data.json())
     }
@@ -79,8 +79,19 @@ class ThreadList extends Component {
     }
 
     _receivedThreads = data => {
-
+        debugger
         data.payload && this.props.setThreads(data.payload);
+
+        for (let thread of data.payload) {
+            thread.messages = thread.messages.map(item => {
+                item._id = item.id
+                item.user._id = item.user.id
+                return item
+            })
+
+            this.props.setMessagesForThread(thread.id, thread.messages);
+        }
+
         console.log(data);
     };
 
@@ -101,15 +112,15 @@ class ThreadList extends Component {
 
         if (messages.length > 0) {
 
-        for (let message of messages) {
-            if (message.text) {
-                messageSnippet = message.text.slice(0, 35);
-                if (messageSnippet.length > message.text.length) {
-                    messageSnippet += "...";
+            for (let message of messages) {
+                if (message.text) {
+                    messageSnippet = message.text.slice(0, 35);
+                    if (messageSnippet.length > message.text.length) {
+                        messageSnippet += "...";
+                    }
+                    break;
                 }
-                break;
             }
-        }
         }
         return (
             <ThreadItem

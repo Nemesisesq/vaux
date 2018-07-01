@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import {createStore, combineReducers, applyMiddleware} from "redux";
 import promiseMiddleware from "redux-promise";
 import {persistStore, persistReducer} from "redux-persist";
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
@@ -10,9 +10,9 @@ import authReducer from "./ducks.auth"
 import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
-   message: messageReducer,
-   thread: threadReducer,
-   networking: networkingReducer,
+    message: messageReducer,
+    thread: threadReducer,
+    networking: networkingReducer,
     auth: authReducer,
 });
 
@@ -20,7 +20,7 @@ const persistConfig = {
     key: "root",
     storage: storage,
     stateReconciler: hardSet,
-    blacklist : ['networking']
+    blacklist: ['networking']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -31,8 +31,8 @@ const middleware = [
 ]
 
 export const store = createStore(
-  persistedReducer,
-   applyMiddleware(...middleware)
+    persistedReducer,
+    applyMiddleware(...middleware),
 );
 
 export const persistor = persistStore(store);
