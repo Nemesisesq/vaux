@@ -19,7 +19,8 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: "root",
     storage: storage,
-    stateReconciler: hardSet
+    stateReconciler: hardSet,
+    blacklist : ['networking']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

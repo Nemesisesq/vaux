@@ -32,7 +32,6 @@ class App extends Component {
     }
 
     _getUser = async () => {
-        debugger
         await axios({
             url: `${protocol.http}${hostUri}/verify`,
             method: "GET",
@@ -43,12 +42,10 @@ class App extends Component {
             },
         })
             .then(response => {
-                debugger
                 store.dispatch(networking.setUser(response.data));
                 console.log(response)
             })
             .catch(error => {
-                debugger
                 console.log(error);
             });
     };
@@ -71,10 +68,6 @@ class App extends Component {
 
          await this._getUser();
 
-
-        debugger
-
-
         const url = `${protocol.ws}${hostUri}/api/connect`;
         await store.dispatch(networking.connect(url));
 
@@ -93,7 +86,6 @@ class App extends Component {
     };
 
     _onError = err => {
-        debugger
         console.log(err);
         this.setState({isReady: true});
     };

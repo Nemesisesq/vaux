@@ -154,7 +154,6 @@ class ThreadList extends Component {
 }
 
 function mapStateToProps(state) {
-    debugger;
     return {
         threads: state.thread.data,
         messages: state.message.data,
