@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {YellowBox, StatusBar, View, Text} from "react-native";
 import {AppLoading, Asset} from "expo";
 import {dispatch, Provider} from "react-redux";
-
+import {connect} from 'react-redux'
 import {store, message, networking} from "./ducks/index";
 import localStore from "./utils/local-store";
 import {ASSET_DIR, SOUNDS, BASE_URL} from "./constants/index";
@@ -32,26 +32,25 @@ class App extends Component {
     }
 
     _getUser = async () => {
-
-
-
+        debugger
         await axios({
             url: `${protocol.http}${hostUri}/verify`,
             method: "GET",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                Authorization: data.jwtToken
+                Authorization: `Bearer ${this.props.jwt}`
             },
         })
             .then(response => {
+                debugger
+                store.dispatch(networking.setUser(response.data));
                 console.log(response)
             })
             .catch(error => {
+                debugger
                 console.log(error);
             });
-
-        return user;
     };
 
 
@@ -70,10 +69,14 @@ class App extends Component {
 
         store.dispatch(message.setPlayedSounds(setRes.data));
 
-        // const user = await this._getUser();
-        // store.dispatch(setUser(user));
+         await this._getUser();
 
-        await store.dispatch(networking.connect(`${protocol.ws}${hostUri}/connect`));
+
+        debugger
+
+
+        const url = `${protocol.ws}${hostUri}/api/connect`;
+        await store.dispatch(networking.connect(url));
 
 
         const {error} = store.getState().networking;
@@ -90,6 +93,7 @@ class App extends Component {
     };
 
     _onError = err => {
+        debugger
         console.log(err);
         this.setState({isReady: true});
     };
@@ -119,5 +123,9 @@ class App extends Component {
     }
 }
 
-
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        jwt : state.auth.jwt
+    }
+}
+export default connect(mapStateToProps,{})(App);

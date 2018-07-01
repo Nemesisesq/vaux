@@ -47,7 +47,6 @@ class ChatBase extends Component {
     }
 
     _receiveMessage = data => {
-        debugger
         this.props.addMessages(data.thread_id, data.payload)
         console.log(data)
     }
