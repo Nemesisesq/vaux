@@ -18,7 +18,7 @@ const ENV = {
          // apiUrl: "vaux.ngrok.io"
     },
     staging: {
-        apiUrl: "infinite-chamber-75377.herokuapp.com",
+        apiUrl: "vaux.herokuapp.com",
         proto: {
             ws: "wss://",
             http: "https://"
@@ -26,7 +26,11 @@ const ENV = {
         facebookAppID: '196693064273005'
     },
     prod: {
-        apiUrl: "infinite-chamber-75377.herokuapp.com",
+        apiUrl: "vaux.herokuapp.com",
+        proto: {
+            ws: "wss://",
+            http: "https://"
+        },
         facebookAppID: '196693064273005'
     }
 };
