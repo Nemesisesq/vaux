@@ -1,4 +1,4 @@
-import Symbol from 'es6-symbol';
+import Symbol from "es6-symbol";
 const INITIAL_STATE = {
    data: {},
    playedSounds: null
@@ -8,6 +8,7 @@ export const ACTIONS = {
    SET_PLAYED_SOUNDS: Symbol("ACTION/MESSAGE/SET_PLAYED_SOUNDS"),
    ADD_PLAYED_SOUND: Symbol("ACTION/MESSAGE/ADD_PLAYED_SOUND"),
    ADD_MESSAGES: Symbol("ACTION/MESSAGE/ADD_MESSAGE"),
+   UPDATE_MESSAGE: Symbol("ACTION/MESSAGE/UPDATE_MESSAGE"),
    SET_MESSAGES_FOR_THREAD: Symbol("ACTION/MESSAGE/SET_MESSAGES_FOR_THREAD")
 };
 
@@ -39,6 +40,13 @@ export function addMessages(threadId, messages) {
    };
 }
 
+export function updateMessage(threadId, messageId, data) {
+   return {
+      type: ACTIONS.UPDATE_MESSAGE,
+      payload: { threadId, messageId, data }
+   };
+}
+
 export default function reducer(state = INITIAL_STATE, action = {}) {
    switch (action.type) {
       case ACTIONS.SET_PLAYED_SOUNDS:
@@ -63,6 +71,23 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
                   ...action.payload.messages,
                   ...(state.data[action.payload.threadId] || [])
                ]
+            }
+         };
+      case ACTIONS.UPDATE_MESSAGE:
+         let { threadId, messageId, data } = action.payload;
+         let messages = state.data[action.payload.threadId] || [];
+         let messageToUpdateIndex = messages.findIndex(
+            ({ _id: id }) => id === messageId
+         );
+         messages[messageToUpdateIndex] = {
+            ...messages[messageToUpdateIndex],
+            ...data
+         };
+         return {
+            ...state,
+            data: {
+               ...state.data,
+               [action.payload.threadId]: [...messages]
             }
          };
       case ACTIONS.SET_MESSAGES_FOR_THREAD:

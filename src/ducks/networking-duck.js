@@ -1,10 +1,11 @@
 import { SocketHelper } from "../networking";
-import {SET_USER} from "../utils/types";
-import Symbol from 'es6-symbol';
+import { SET_USER } from "../utils/types";
+import Symbol from "es6-symbol";
+
 const INITIAL_STATE = {
    socketHelper: null,
    error: null,
-    user: null
+   user: null
 };
 
 const ACTIONS = {
@@ -41,8 +42,8 @@ export async function disconnect() {
 export async function setUser(user) {
    return {
       type: SET_USER,
-       payload: user
-   }
+      payload: user
+   };
 }
 
 export default function reducer(state = INITIAL_STATE, action = {}) {
@@ -66,11 +67,11 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
             socketHelper: null,
             error: action.payload
          };
-       case SET_USER:
-          return {
-              ...state,
-              user: action.payload
-          }
+      case SET_USER:
+         return {
+            ...state,
+            user: action.payload
+         };
       default:
          return { ...state };
    }
