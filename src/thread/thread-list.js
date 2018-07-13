@@ -13,12 +13,6 @@ import { Data, Thread } from "../utils";
 import Chance from "chance";
 import { CREATE_THREAD, SET_USER, SET_ACTIVE_THREAD } from "../utils/types";
 
-import {
-   SAMPLE_THREAD_IDS,
-   generateSampleThreads,
-   generateSampleMessages
-} from "../utils/sample-data";
-
 class ThreadList extends Component {
    static propTypes = {
       threads: PropTypes.arrayOf(AppPropTypes.Thread).isRequired
@@ -58,21 +52,21 @@ class ThreadList extends Component {
    };
 
    componentDidMount() {
-      // const {socketHelper} = this.props;
-      // socketHelper.subscribe("threads", this._receivedThreads);
-      // socketHelper.subscribe("bad_user", this._badUser);
-      // const data = new Data(SET_USER, this.props.email, null);
-      // socketHelper.ws.send(data.json())
+      const { socketHelper } = this.props;
+      socketHelper.subscribe("threads", this._receivedThreads);
+      socketHelper.subscribe("bad_user", this._badUser);
+      const data = new Data(SET_USER, this.props.email, null);
+      socketHelper.ws.send(data.json());
 
       // NOTE: uncomment to populate with sample data
-      const sampleThreads = generateSampleThreads(SAMPLE_THREAD_IDS.length, {
-         threadIds: SAMPLE_THREAD_IDS
-      });
-      this.props.setThreads(sampleThreads);
-      for (let threadId of SAMPLE_THREAD_IDS) {
-         const sampleMessages = generateSampleMessages(5);
-         this.props.setMessagesForThread(threadId, sampleMessages);
-      }
+      // const sampleThreads = generateSampleThreads(SAMPLE_THREAD_IDS.length, {
+      //    threadIds: SAMPLE_THREAD_IDS
+      // });
+      // this.props.setThreads(sampleThreads);
+      // for (let threadId of SAMPLE_THREAD_IDS) {
+      //    const sampleMessages = generateSampleMessages(5);
+      //    this.props.setMessagesForThread(threadId, sampleMessages);
+      // }
    }
 
    componentWillUnmount() {
@@ -101,7 +95,7 @@ class ThreadList extends Component {
       const { socketHelper } = this.props;
 
       const data = new Data(SET_ACTIVE_THREAD, threadId.id, null);
-      // socketHelper.ws.send(data.json());
+      socketHelper.ws.send(data.json());
       this.props.setActiveThread(threadId);
 
       this.props.navigation.navigate("Chat");
@@ -179,8 +173,8 @@ function mapStateToProps(state) {
    return {
       threads: state.thread.data,
       messages: state.message.data,
-      socketHelper: state.networking.socketHelper
-      // email: state.networking.user.email
+      socketHelper: state.networking.socketHelper,
+      email: state.networking.user.email
    };
 }
 

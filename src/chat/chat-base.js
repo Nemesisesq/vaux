@@ -209,8 +209,7 @@ function mapStateToProps(state) {
       messages: state.message.data[state.thread.activeThread],
       socketHelper: state.networking.socketHelper,
       playedSounds: state.message.playedSounds,
-      // user: state.networking.user
-      user: { id: 1 }
+      user: state.networking.user
    };
 }
 

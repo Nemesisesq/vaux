@@ -18,9 +18,9 @@ class App extends Component {
       return (
          <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-               {/* <Auth> */}
-               <Main />
-               {/* </Auth> */}
+               <Auth>
+                  <Main />
+               </Auth>
             </PersistGate>
          </Provider>
       );

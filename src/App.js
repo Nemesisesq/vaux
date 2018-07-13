@@ -64,9 +64,9 @@ class App extends Component {
 
       this.props.setPlayedSounds(setRes.data);
 
-      // await this._getUser();
-      // const url = `${protocol.ws}${hostUri}/api/connect`;
-      // await this.props.connect(url);
+      await this._getUser();
+      const url = `${protocol.ws}${hostUri}/api/connect`;
+      await this.props.connect(url);
 
       // pre-cache sounds
       const soundAssets = Object.values(SOUNDS).map(sound => {
