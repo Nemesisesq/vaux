@@ -75,7 +75,6 @@ class ThreadList extends Component {
    }
 
    _receivedThreads = data => {
-      debugger;
       data.payload && this.props.setThreads(data.payload);
 
       for (let thread of data.payload) {

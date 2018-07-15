@@ -4,7 +4,7 @@ const ENV = {
    dev: {
       // apiUrl:"infinite-chamber-75377.herokuapp.com/",
       //  facebookAppID : '196693064273005',
-      // apiUrl: "localhost:3000",
+      apiUrl: "localhost:3000",
       proto: {
          ws: "ws://",
          http: "http://"

@@ -166,7 +166,12 @@ class ChatBase extends Component {
    }
 
    render() {
-      const { navigation, messages, user } = this.props;
+      let { navigation, messages, user } = this.props;
+debugger
+      messages = messages.map( item => {
+          item.user  = {_id : item.user_id}
+          return item
+       })
       // const messages = navigation.getParam('messages', []);
 
       const android = (
