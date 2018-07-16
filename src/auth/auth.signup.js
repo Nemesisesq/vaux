@@ -1,11 +1,12 @@
 import React, {Compoennt} from 'react';
+import {connect} from 'react-redux'
 import {hostUri, protocol} from "../config";
 import axios from "axios/index";
 import {auth, store} from "../ducks";
 import {Component} from "react";
 import {Button, Content, Form, Input, Item, Label, Text} from "native-base";
 
-export default class Signup extends Component {
+class Signup extends Component {
     state = {
         email: "",
         password: "",
@@ -24,7 +25,7 @@ export default class Signup extends Component {
             data: this.state
         })
             .then(response => {
-                store.dispatch(auth.setScreen("login"))
+                this.props.navigation.navigate('Login')
                 console.log(response)
                 //    TODO do something with the JWT
             })
@@ -82,3 +83,11 @@ export default class Signup extends Component {
         return (text) => this.setState({[key]: text});
     }
 }
+
+const mapStateToProps = state => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, {})(Signup)
