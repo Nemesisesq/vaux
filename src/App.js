@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { YellowBox, StatusBar, View, Text } from "react-native";
 import { AppLoading, Asset } from "expo";
-import { dispatch, Provider } from "react-redux";
-import { connect } from "react-redux";
+import { connect, dispatch } from "react-redux";
 import { message, networking } from "./ducks/index";
 import localStore from "./utils/local-store";
-import { ASSET_DIR, SOUNDS, BASE_URL } from "./constants/index";
-import Base from "./index";
+import { ASSET_DIR, SOUNDS} from "./constants/index";
 import ErrorScreen from "./components/error-screen";
 import axios from "axios";
 import { hostUri, protocol } from "./config";
+import RootStack from './navigation'
+import NavigationService from "./navigation/navigation.service";
 
 /*
  * ignore react-native core warnings; these are irrelevant, as per here:
@@ -64,7 +64,6 @@ class App extends Component {
 
       this.props.setPlayedSounds(setRes.data);
 
-      await this._getUser();
       const url = `${protocol.ws}${hostUri}/api/connect`;
       await this.props.connect(url);
 
@@ -102,8 +101,11 @@ class App extends Component {
 
       return (
          <View style={{ flex: 1 }}>
-            <StatusBar backgroundColor="transparent" barStyle="light-content" />
-            <Base />
+            <RootStack
+                ref={navigatorRef => {
+                    NavigationService.setRootNavigator(navigatorRef);
+                }}
+            />
          </View>
       );
    }
