@@ -1,7 +1,9 @@
+import React, {Compoennt} from 'react';
 import {hostUri, protocol} from "../config";
 import axios from "axios/index";
 import {auth, store} from "../ducks";
 import {Component} from "react";
+import {Button, Content, Form, Input, Item, Label, Text} from "native-base";
 
 export default class Signup extends Component {
     state = {
@@ -67,6 +69,9 @@ export default class Signup extends Component {
                 </Form>
                 <Button full onPress={this._signup}>
                     <Text>Sign Up</Text>
+                </Button>
+                <Button transparent onPress={_ => this.props.navigation.navigate('Login')}>
+                    <Text>Login</Text>
                 </Button>
             </Content>
 

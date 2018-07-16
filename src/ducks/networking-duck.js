@@ -32,14 +32,15 @@ export async function connect(url) {
    };
 }
 
-export async function disconnect() {
+export function disconnect() {
    return {
       type: CLEAR_SOCKET_HELPER,
       payload: true
    };
 }
 
-export async function setUser(user) {
+export function setUser(user) {
+    debugger
    return {
       type: SET_USER,
       payload: user

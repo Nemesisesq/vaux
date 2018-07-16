@@ -8,6 +8,7 @@ import {setJWT, setScreen} from "../ducks/ducks.auth";
 import NavigationService from "../navigation/navigation.service";
 import axios from 'axios'
 import { hostUri, protocol } from "../config";
+import {setUser} from "../ducks/networking-duck";
 
 
 class Auth extends Component {
@@ -17,14 +18,13 @@ class Auth extends Component {
         jwtValid: false,
     }
 
-    componentDidMount() {
-            debugger
+    async componentDidMount() {
         if (_.isEmpty(this.props.jwt)) {
             this.props.navigation.navigate('Login')
             return
         }
 
-        axios({
+         await axios({
             url: `${protocol.http}${hostUri}/verify`,
             method: "GET",
             headers: {
@@ -34,12 +34,12 @@ class Auth extends Component {
             }
         })
             .then(response => {
-                debugger
+
+                this.props.setUser(response.data)
                 NavigationService.navigate('Base');
                 console.log(response);
             })
             .catch(error => {
-                debugger
                 this.props.navigation.navigate('Login')
                 console.log(error);
             });
@@ -53,12 +53,6 @@ class Auth extends Component {
                     <Text>Loading placeholder</Text>
                 </View>
             )
-
-
-    }
-
-    _ud(state) {
-        this.props.setScreen(state)
     }
 }
 
@@ -72,7 +66,8 @@ const mapStateToProps = (state) => {
 
 const ConnectedAuth = connect(mapStateToProps, {
     setJWT,
-    setScreen
+    setScreen,
+    setUser
 })(Auth)
 
 
@@ -87,7 +82,7 @@ export default createStackNavigator(
             screen: LoginScreen
         },
 
-        Signup: {
+        SignUp: {
             screen: SignupScreen
         }
     }

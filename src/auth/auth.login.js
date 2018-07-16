@@ -1,8 +1,10 @@
 import axios from "axios/index";
+import {hostUri, protocol} from "../config";
 import React, {Component} from "react";
 import {connect} from 'react-redux'
 import {setJWT} from "../ducks/ducks.auth";
 import {Button, Content, Form, Input, Item, Label, Text} from "native-base";
+import NavigationService from '../navigation/navigation.service'
 
 class Login extends Component {
     state = {
@@ -22,7 +24,6 @@ const {setJWT} = this.props
             data: this.state
         })
             .then(response => {
-
                 setJWT(response.data.jwt)
                 console.log(response)
                 //    TODO do something with the JWT
@@ -60,6 +61,9 @@ const {setJWT} = this.props
                 </Form>
                 <Button full onPress={this._login}>
                     <Text>Login</Text>
+                </Button>
+                <Button transparent onPress={_ => this.props.navigation.navigate('SignUp')}>
+                    <Text>Sign Up</Text>
                 </Button>
             </Content>
 
