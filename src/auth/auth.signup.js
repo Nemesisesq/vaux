@@ -63,7 +63,7 @@ class Signup extends Component {
                         <Label>Confirm Password</Label>
                         <Input
                             value={password_confirm}
-                            onChangeText={this._onChangeText("password_confirm")}
+                            onChangeText={this._onChangeText("password_confirmation")}
                             autoCapitalize='none'
                         />
                     </Item>
