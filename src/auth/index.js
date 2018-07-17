@@ -24,6 +24,7 @@ class Auth extends Component {
             return
         }
 
+
          await axios({
             url: `${protocol.http}${hostUri}/verify`,
             method: "GET",
@@ -34,7 +35,6 @@ class Auth extends Component {
             }
         })
             .then(response => {
-
                 this.props.setUser(response.data)
                 NavigationService.navigate('Base');
                 console.log(response);
@@ -46,8 +46,18 @@ class Auth extends Component {
 
     }
 
-    render() {
+    componentDidUpdate(){
+        if (_.isEmpty(this.props.jwt)) {
+            this.props.navigation.navigate('Login')
+            return
+        }
+    }
 
+    render() {
+        const {navigation} = this.props
+        if (navigation.getParam('logout')){
+            this.props.setJWT(null)
+        }
             return (
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Text>Loading placeholder</Text>

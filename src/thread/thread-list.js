@@ -12,6 +12,8 @@ import { Icon } from "native-base";
 import { Data, Thread } from "../utils";
 import Chance from "chance";
 import { CREATE_THREAD, SET_USER, SET_ACTIVE_THREAD } from "../utils/types";
+import {setJWT} from "../ducks/ducks.auth";
+import NavigationService from '../navigation/navigation.service'
 
 class ThreadList extends Component {
    static propTypes = {
@@ -22,12 +24,14 @@ class ThreadList extends Component {
       threads: []
    };
 
+
+
    static navigationOptions = {
       title: "Messages",
       headerRight: (
          <Button
             onPress={() => {
-               Auth.signOut();
+                NavigationService.navigate("Auth", {logout: true})
             }}
             title="Logout"
             color="#fff"
@@ -180,7 +184,8 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
    setThreads: thread.setThreads,
    setActiveThread: thread.setActiveThread,
-   setMessagesForThread: message.setMessagesForThread
+   setMessagesForThread: message.setMessagesForThread,
+    setJWT: setJWT
 })(ThreadList);
 
 const styles = StyleSheet.create({

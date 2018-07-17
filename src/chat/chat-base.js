@@ -173,7 +173,6 @@ class ChatBase extends Component {
           return item
        })
       // const messages = navigation.getParam('messages', []);
-debugger
       const android = (
          <KeyboardAvoidingView
             behavior={"padding"}
