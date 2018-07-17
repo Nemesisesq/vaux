@@ -34,6 +34,10 @@ export function setMessagesForThread(threadId, messages) {
 }
 
 export function addMessages(threadId, messages) {
+    messages = messages.map(item => {
+        item.user  = {_id : item.user_id};
+        return item
+    })
    return {
       type: ACTIONS.ADD_MESSAGES,
       payload: { threadId, messages }
@@ -63,15 +67,16 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
             playedSounds: playedSoundsCopy
          };
       case ACTIONS.ADD_MESSAGES:
-         return {
-            ...state,
-            data: {
-               ...state.data,
-               [action.payload.threadId]: [
+          const udMessages = {
+              ...state.data,
+              [action.payload.threadId]: [
                   ...action.payload.messages,
                   ...(state.data[action.payload.threadId] || [])
-               ]
-            }
+              ]
+          };
+          return {
+            ...state,
+            data: udMessages
          };
       case ACTIONS.UPDATE_MESSAGE:
          let { threadId, messageId, data } = action.payload;

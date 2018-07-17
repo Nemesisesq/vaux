@@ -40,7 +40,6 @@ export function disconnect() {
 }
 
 export function setUser(user) {
-    debugger
    return {
       type: SET_USER,
       payload: user

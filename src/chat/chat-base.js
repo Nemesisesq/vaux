@@ -60,6 +60,7 @@ class ChatBase extends Component {
    }
 
    _receiveMessage = data => {
+       thread_id = data.thread_id.replace(/thread./, "")
       this.props.addMessages(data.thread_id, data.payload);
       console.log(data);
    };
@@ -75,7 +76,7 @@ class ChatBase extends Component {
          this._playSoundAsync(sound);
       }
       this.setState({ newMessageSound: null });
-      this.props.addMessages(this.props.activeThread, messages);
+      // this.props.addMessages(this.props.activeThread, messages);
       const data = new Data(ADD_MESSAGE, messages, this.props.activeThread);
       socketHelper.ws.send(data.json());
    };
@@ -167,13 +168,12 @@ class ChatBase extends Component {
 
    render() {
       let { navigation, messages, user } = this.props;
-debugger
       messages = messages.map( item => {
           item.user  = {_id : item.user_id}
           return item
        })
       // const messages = navigation.getParam('messages', []);
-
+debugger
       const android = (
          <KeyboardAvoidingView
             behavior={"padding"}
