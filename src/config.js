@@ -1,23 +1,31 @@
 import * as expo from "expo";
 
 const ENV = {
+   // dev: {
+   //    // apiUrl:"infinite-chamber-75377.herokuapp.com/",
+   //    //  facebookAppID : '196693064273005',
+   //    apiUrl: "localhost:3000",
+   //    proto: {
+   //       ws: "ws://",
+   //       http: "http://"
+   //    }
+   //    // apiUrl: "infinite-chamber-75377.herokuapp.com",
+   //    // proto: {
+   //    //     ws: "wss://",
+   //    //     http: "https://"
+   //    // },
+   //
+   //    // apiUrl: "vaux.ngrok.io"
+   // },
    dev: {
-      // apiUrl:"infinite-chamber-75377.herokuapp.com/",
-      //  facebookAppID : '196693064273005',
-      apiUrl: "localhost:3000",
+      apiUrl: "vaux.herokuapp.com",
       proto: {
-         ws: "ws://",
-         http: "http://"
-      }
-      // apiUrl: "infinite-chamber-75377.herokuapp.com",
-      // proto: {
-      //     ws: "wss://",
-      //     http: "https://"
-      // },
-
-      // apiUrl: "vaux.ngrok.io"
+         ws: "wss://",
+         http: "https://"
+      },
+      facebookAppID: "196693064273005"
    },
-   staging: {
+    staging: {
       apiUrl: "vaux.herokuapp.com",
       proto: {
          ws: "wss://",

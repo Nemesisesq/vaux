@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createStackNavigator} from 'react-navigation'
 import LoginScreen from './auth.login'
@@ -7,7 +7,7 @@ import {Text, View} from "native-base";
 import {setJWT, setScreen} from "../ducks/ducks.auth";
 import NavigationService from "../navigation/navigation.service";
 import axios from 'axios'
-import { hostUri, protocol } from "../config";
+import {hostUri, protocol} from "../config";
 import {setUser} from "../ducks/networking-duck";
 
 
@@ -25,7 +25,7 @@ class Auth extends Component {
         }
 
 
-         await axios({
+        await axios({
             url: `${protocol.http}${hostUri}/verify`,
             method: "GET",
             headers: {
@@ -46,7 +46,7 @@ class Auth extends Component {
 
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         if (_.isEmpty(this.props.jwt)) {
             this.props.navigation.navigate('Login')
             return
@@ -55,14 +55,18 @@ class Auth extends Component {
 
     render() {
         const {navigation} = this.props
-        if (navigation.getParam('logout')){
+        if (navigation.getParam('logout')) {
             this.props.setJWT(null)
         }
-            return (
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <Text>Loading placeholder</Text>
-                </View>
-            )
+        debugger
+        if (!_.isEmpty(this.props.user)) {
+            NavigationService.navigate('Base');
+        }
+        return (
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text>Loading placeholder</Text>
+            </View>
+        )
     }
 }
 
@@ -70,7 +74,8 @@ class Auth extends Component {
 const mapStateToProps = (state) => {
     return {
         screen: state.auth.screen,
-        jwt: state.auth.jwt
+        jwt: state.auth.jwt,
+        user: state.networking.user
     }
 }
 
@@ -79,7 +84,6 @@ const ConnectedAuth = connect(mapStateToProps, {
     setScreen,
     setUser
 })(Auth)
-
 
 
 export default createStackNavigator(
