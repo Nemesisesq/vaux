@@ -1,4 +1,5 @@
 import Symbol from "es6-symbol";
+
 const INITIAL_STATE = {
    data: {},
    playedSounds: null
@@ -34,10 +35,10 @@ export function setMessagesForThread(threadId, messages) {
 }
 
 export function addMessages(threadId, messages) {
-    messages = messages.map(item => {
-        item.user  = {_id : item.user_id};
-        return item
-    })
+   messages = messages.map(item => {
+      item.user = { _id: item.user_id };
+      return item;
+   });
    return {
       type: ACTIONS.ADD_MESSAGES,
       payload: { threadId, messages }
@@ -67,14 +68,14 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
             playedSounds: playedSoundsCopy
          };
       case ACTIONS.ADD_MESSAGES:
-          const udMessages = {
-              ...state.data,
-              [action.payload.threadId]: [
-                  ...action.payload.messages,
-                  ...(state.data[action.payload.threadId] || [])
-              ]
-          };
-          return {
+         const udMessages = {
+            ...state.data,
+            [action.payload.threadId]: [
+               ...action.payload.messages,
+               ...(state.data[action.payload.threadId] || [])
+            ]
+         };
+         return {
             ...state,
             data: udMessages
          };
@@ -84,10 +85,18 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
          let messageToUpdateIndex = messages.findIndex(
             ({ _id: id }) => id === messageId
          );
-         messages[messageToUpdateIndex] = {
-            ...messages[messageToUpdateIndex],
-            ...data
-         };
+
+         if (messageToUpdateIndex === -1) {
+            // message is new
+            messages.unshift(data);
+         } else {
+            // message exists
+            messages[messageToUpdateIndex] = {
+               ...messages[messageToUpdateIndex],
+               ...data
+            };
+         }
+
          return {
             ...state,
             data: {

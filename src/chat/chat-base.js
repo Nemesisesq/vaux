@@ -60,9 +60,10 @@ class ChatBase extends Component {
    }
 
    _receiveMessage = data => {
-       thread_id = data.thread_id.replace(/thread./, "")
-      this.props.addMessages(data.thread_id, data.payload);
-      console.log(data);
+      const thread_id = data.thread_id.replace(/thread./, "");
+      let [message] = data.payload;
+      message._id = message.id;
+      this.props.updateMessage(data.thread_id, message._id, message);
    };
 
    _onSend = (messages = []) => {
@@ -90,8 +91,6 @@ class ChatBase extends Component {
 
    _onAddToExistingMessage = sound => {
       const { messageReceivingSound: message } = this.state;
-
-      // TODO: add the sound to this id on the server!
       const { _id: messageId } = message;
 
       this._playSoundAsync(sound);
@@ -167,12 +166,15 @@ class ChatBase extends Component {
    }
 
    render() {
-      let { navigation, messages, user } = this.props;
-      messages = messages.map( item => {
-          item.user  = {_id : item.user_id}
-          return item
-       })
-      // const messages = navigation.getParam('messages', []);
+      let { navigation, user } = this.props;
+      let messages = this.props.messages.map(item => {
+         item.user = {
+            ...item.user,
+            _id: item.user_id
+         };
+         return item;
+      });
+
       const android = (
          <KeyboardAvoidingView
             behavior={"padding"}
@@ -184,7 +186,7 @@ class ChatBase extends Component {
          <View style={{ flex: 1 }}>
             <GiftedChat
                renderActions={this._renderActions}
-               messages={this.getMessages(messages)}
+               messages={messages}
                onSend={this._onSend}
                user={{ _id: user.id }}
                keyboardShouldPersistTaps={"never"}
@@ -205,11 +207,6 @@ class ChatBase extends Component {
          </View>
       );
    }
-
-    getMessages(messages) {
-      debugger
-        return messages;
-    }
 }
 
 function mapStateToProps(state) {
