@@ -77,7 +77,7 @@ class ChatBase extends Component {
          this._playSoundAsync(sound);
       }
       this.setState({ newMessageSound: null });
-      this.props.addMessages(this.props.activeThread, messages);
+      // this.props.addMessages(this.props.activeThread, messages);
       const data = new Data(ADD_MESSAGE, messages, this.props.activeThread);
       socketHelper.ws.send(data.json());
    };
