@@ -61,6 +61,7 @@ class Auth extends Component {
         debugger
         if (!_.isEmpty(this.props.user)) {
             NavigationService.navigate('Base');
+            return null
         }
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

@@ -76,7 +76,7 @@ class ChatBase extends Component {
          this._playSoundAsync(sound);
       }
       this.setState({ newMessageSound: null });
-      // this.props.addMessages(this.props.activeThread, messages);
+      this.props.addMessages(this.props.activeThread, messages);
       const data = new Data(ADD_MESSAGE, messages, this.props.activeThread);
       socketHelper.ws.send(data.json());
    };
@@ -184,7 +184,7 @@ class ChatBase extends Component {
          <View style={{ flex: 1 }}>
             <GiftedChat
                renderActions={this._renderActions}
-               messages={messages}
+               messages={this.getMessages(messages)}
                onSend={this._onSend}
                user={{ _id: user.id }}
                keyboardShouldPersistTaps={"never"}
@@ -205,6 +205,11 @@ class ChatBase extends Component {
          </View>
       );
    }
+
+    getMessages(messages) {
+      debugger
+        return messages;
+    }
 }
 
 function mapStateToProps(state) {

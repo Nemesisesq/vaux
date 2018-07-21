@@ -24,9 +24,10 @@ const {setJWT} = this.props
             data: this.state
         })
             .then(response => {
+                debugger
                 setJWT(response.data.jwt)
                 console.log(response)
-                this.props.navigation.navigate('Auth')
+                this.props.navigation.navigate('Base')
                 //    TODO do something with the JWT
             })
             .catch(error => {

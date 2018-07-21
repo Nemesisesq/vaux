@@ -130,8 +130,9 @@ class ThreadList extends Component {
    };
 
    _badUser = () => {
-      Auth.signOut();
-      Expo.reload();
+      debugger
+       this.props.setJWT(null)
+      Expo.Util.reload();
    };
 
    _keyExtractor = item => item.id;

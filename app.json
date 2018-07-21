@@ -11,8 +11,8 @@
       "supportsTablet": false
     },
     "android": {
-      "package": "com.vauxilary.expo",
-      "versionCode" : 1
+      "package": "com.vauxiliary.expo",
+      "versionCode" : 2
     }
   }
 }
