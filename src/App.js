@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { YellowBox, StatusBar, View, Text } from "react-native";
 import { AppLoading, Asset } from "expo";
 import { connect, dispatch } from "react-redux";
-import { message, networking } from "./ducks/index";
+import { message, networking, auth } from "./ducks/index";
 import localStore from "./utils/local-store";
 import { ASSET_DIR, SOUNDS} from "./constants/index";
 import ErrorScreen from "./components/error-screen";
@@ -121,7 +121,7 @@ const mapStateToProps = ({ auth = {}, networking = {} }) => {
 const mapDispatchToProps = {
    setPlayedSounds: message.setPlayedSounds,
    connect: networking.connect,
-   setUser: networking.setUser
+   setUser: auth.setUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

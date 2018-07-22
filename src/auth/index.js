@@ -8,7 +8,7 @@ import {setJWT, setScreen} from "../ducks/ducks.auth";
 import NavigationService from "../navigation/navigation.service";
 import axios from 'axios'
 import {hostUri, protocol} from "../config";
-import {setUser} from "../ducks/networking-duck";
+import {setUser} from "../ducks/ducks.auth";
 
 
 class Auth extends Component {
@@ -25,6 +25,11 @@ class Auth extends Component {
         }
 
 
+        await this._verifyUser();
+
+    }
+
+    async _verifyUser() {
         await axios({
             url: `${protocol.http}${hostUri}/verify`,
             method: "GET",
@@ -34,8 +39,8 @@ class Auth extends Component {
                 Authorization: `Bearer ${this.props.jwt}`
             }
         })
-            .then(response => {
-                this.props.setUser(response.data)
+            .then(async response => {
+                await this.props.setUser(response.data)
                 NavigationService.navigate('Base');
                 console.log(response);
             })
@@ -43,7 +48,6 @@ class Auth extends Component {
                 this.props.navigation.navigate('Login')
                 console.log(error);
             });
-
     }
 
     componentDidUpdate() {
@@ -53,19 +57,36 @@ class Auth extends Component {
         }
     }
 
-    render() {
-        const {navigation} = this.props
+
+    shouldComponentUpdate(nextProps, nextState) {
+
+        if (this.props.jwt !== nextProps.jwt) {
+            if (_.isEmpty(nextProps.jwt)) {
+
+                this.props.navigation.navigate('Login')
+                return true
+            } else {
+
+                NavigationService.navigate('Base')
+                return true
+            }
+        }
+
+        const {navigation} = nextProps
         if (navigation.getParam('logout')) {
             this.props.setJWT(null)
+            navigation.setParams(null)
         }
-        debugger
-        if (!_.isEmpty(this.props.user)) {
-            NavigationService.navigate('Base');
-            return null
-        }
+        return true
+    }
+
+    render() {
+
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Text>Loading placeholder</Text>
+                {JSON.stringify(this.props.jwt)}
+                {JSON.stringify(this.props.user)}
             </View>
         )
     }
@@ -91,15 +112,22 @@ export default createStackNavigator(
     {
 
         Auth: {
-            screen: ConnectedAuth
+            screen: ConnectedAuth,
         },
         Login: {
-            screen: LoginScreen
+            screen: LoginScreen,
+            navigationOptions: {
+                gesturesEnabled: false,
+                headerLeft: null
+            },
         },
 
         SignUp: {
             screen: SignupScreen
         }
+    },
+    {
+        headerMode: 'none'
     }
 );
 

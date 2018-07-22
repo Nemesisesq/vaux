@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, FlatList, StyleSheet, Button } from "react-native";
 import { connect } from "react-redux";
-import { Auth } from "aws-amplify";
 import { colors, AppPropTypes } from "../constants";
 import { thread, message } from "../ducks";
 import ThreadItem from "./thread-item";
@@ -130,13 +129,14 @@ class ThreadList extends Component {
    };
 
    _badUser = () => {
-      debugger
        this.props.setJWT(null)
-      Expo.Util.reload();
    };
 
    _keyExtractor = item => item.id;
-
+   shouldComponentUpdate(nextProps, nextState){
+       debugger
+       return true
+   }
    render() {
       if (this.props.threads.length) {
          return (
@@ -178,7 +178,7 @@ function mapStateToProps(state) {
       threads: state.thread.data,
       messages: state.message.data,
       socketHelper: state.networking.socketHelper,
-      email: state.networking.user.email
+      email: state.auth.user.email
    };
 }
 

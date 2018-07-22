@@ -42,7 +42,7 @@ class Signup extends Component {
 
 
             <Content>
-                <Form>
+                <Form style={{paddingTop:100}}>
                     <Item stackedLabel>
                         <Label>Email</Label>
                         <Input

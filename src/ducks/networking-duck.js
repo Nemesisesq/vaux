@@ -5,7 +5,7 @@ import Symbol from "es6-symbol";
 const INITIAL_STATE = {
    socketHelper: null,
    error: null,
-   user: null
+   user: {}
 };
 
 const ACTIONS = {
