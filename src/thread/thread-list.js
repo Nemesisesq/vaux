@@ -134,7 +134,6 @@ class ThreadList extends Component {
 
    _keyExtractor = item => item.id;
    shouldComponentUpdate(nextProps, nextState){
-       debugger
        return true
    }
    render() {
