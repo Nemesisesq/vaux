@@ -202,15 +202,15 @@ class ChatBase extends Component {
     }
 
     mapMessages(messages) {
-        messages.map(item => {
+       messages = messages.map(item => {
             return {
                 _id: item.id,
                 text: item.text,
                 createdAt: new Date(Date.parse(item.created_at)),
                 user: {
-                    _id: item.user._id,
-                    // name: item.user.name,
-                    // avatar: 'https://facebook.github.io/react/img/logo_og.png',
+                    _id: item.user_id,
+                    name: item.user.name,
+                    avatar: 'https://facebook.github.io/react/img/logo_og.png',
                 },
                 // image: 'https://facebook.github.io/react/img/logo_og.png',
                 // Any additional custom parameters are passed through
