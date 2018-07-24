@@ -60,7 +60,6 @@ class ChatBase extends Component {
     }
 
     _receiveMessage = data => {
-        debugger
         data = data.payload.map(i => JSON.parse(i))
         let [message] = data;
         message._id = message.id;
@@ -167,15 +166,8 @@ class ChatBase extends Component {
     }
 
     render() {
-        let {navigation, user} = this.props;
-        let messages = this.props.messages.map(item => {
-            item.user = {
-                ...item.user,
-                _id: item.user_id
-            };
-            return item;
-        });
-
+        let {navigation, user, messages} = this.props;
+        //TODO Populate users in mesaages in threads
         const android = (
             <KeyboardAvoidingView
                 behavior={"padding"}
@@ -210,7 +202,6 @@ class ChatBase extends Component {
     }
 
     mapMessages(messages) {
-        debugger
         messages.map(item => {
             return {
                 _id: item.id,

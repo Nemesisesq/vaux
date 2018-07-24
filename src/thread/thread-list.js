@@ -13,6 +13,7 @@ import Chance from "chance";
 import { CREATE_THREAD, SET_USER, SET_ACTIVE_THREAD } from "../utils/types";
 import {setJWT} from "../ducks/ducks.auth";
 import NavigationService from '../navigation/navigation.service'
+import axios from "axios/index";
 
 class ThreadList extends Component {
    static propTypes = {
@@ -56,8 +57,8 @@ class ThreadList extends Component {
 
    componentDidMount() {
       const { socketHelper } = this.props;
+      console.log(this.props.email)
       socketHelper.subscribe("threads", this._receivedThreads);
-      socketHelper.subscribe("bad_user", this._badUser);
       const data = new Data(SET_USER, this.props.email, null);
       socketHelper.ws.send(data.json());
 
@@ -129,6 +130,7 @@ class ThreadList extends Component {
    };
 
    _badUser = () => {
+       debugger
        this.props.setJWT(null)
    };
 
@@ -177,7 +179,7 @@ function mapStateToProps(state) {
       threads: state.thread.data,
       messages: state.message.data,
       socketHelper: state.networking.socketHelper,
-      email: state.auth.user.email
+      email: state.networking.user.email
    };
 }
 

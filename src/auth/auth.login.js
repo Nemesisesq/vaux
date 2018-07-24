@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {setJWT} from "../ducks/ducks.auth";
 import {Button, Content, Form, Input, Item, Label, Text, View} from "native-base";
 import NavigationService from '../navigation/navigation.service'
+import {setUser} from "../ducks/ducks.auth"
 
 class Login extends Component {
     state = {
@@ -24,8 +25,11 @@ class Login extends Component {
             data: this.state
         })
             .then(response => {
+                debugger
+                setUser(response.data.user)
                 setJWT(response.data.jwt)
                 console.log(response)
+                return response
             })
             .catch(error => {
                 console.log(error);
@@ -80,4 +84,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {setJWT})(Login)
+export default connect(mapStateToProps, {setJWT, setUser})(Login)
