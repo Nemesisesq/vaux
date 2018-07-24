@@ -209,8 +209,8 @@ class ChatBase extends Component {
                 createdAt: new Date(Date.parse(item.created_at)),
                 user: {
                     _id: item.user._id,
-                    name: item.user.name,
-                    avatar: 'https://facebook.github.io/react/img/logo_og.png',
+                    // name: item.user.name,
+                    // avatar: 'https://facebook.github.io/react/img/logo_og.png',
                 },
                 // image: 'https://facebook.github.io/react/img/logo_og.png',
                 // Any additional custom parameters are passed through

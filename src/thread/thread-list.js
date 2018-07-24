@@ -130,7 +130,6 @@ class ThreadList extends Component {
    };
 
    _badUser = () => {
-       debugger
        this.props.setJWT(null)
    };
 
@@ -179,7 +178,7 @@ function mapStateToProps(state) {
       threads: state.thread.data,
       messages: state.message.data,
       socketHelper: state.networking.socketHelper,
-      email: state.networking.user.email
+      email: state.auth.user.email
    };
 }
 

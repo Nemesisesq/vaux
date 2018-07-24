@@ -25,7 +25,6 @@ class Login extends Component {
             data: this.state
         })
             .then(response => {
-                debugger
                 setUser(response.data.user)
                 setJWT(response.data.jwt)
                 console.log(response)
