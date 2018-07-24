@@ -85,8 +85,6 @@ class Auth extends Component {
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Text>Loading placeholder</Text>
-                {JSON.stringify(this.props.jwt)}
-                {JSON.stringify(this.props.user)}
             </View>
         )
     }

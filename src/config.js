@@ -87,14 +87,12 @@ export const navStyles = {
       headerTintColor: "#fff",
       headerTitleStyle: {
          fontSize: 20,
-         fontFamily: "PN-Regular"
       }
    },
    tabBar: {
       activeTintColor: colors.primary.light,
       inactiveTintColor: colors.grey.light,
       labelStyle: {
-         fontFamily: "PN-Regular",
          fontSize: 14
       },
       style: {
