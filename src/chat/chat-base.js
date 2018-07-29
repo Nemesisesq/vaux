@@ -51,7 +51,7 @@ class ChatBase extends Component {
     }
 
     componentWillUnmount() {
-        const {socketHelper} = this.props;
+        const {socketHelper, user} = this.props;
         socketHelper.unsubscribe(
             `thread.${this.props.activeThread}`,
             this._receiveMessage
@@ -67,6 +67,7 @@ class ChatBase extends Component {
     };
 
     _onSend = (messages = []) => {
+        const {user} = this.props
         const {socketHelper} = this.props;
         const {newMessageSound: sound} = this.state;
         if (sound) {
@@ -77,6 +78,8 @@ class ChatBase extends Component {
             this._playSoundAsync(sound);
         }
         this.setState({newMessageSound: null});
+        debugger
+        messages.user = user
         // this.props.addMessages(this.props.activeThread, messages);
         const data = new Data(ADD_MESSAGE, messages, this.props.activeThread);
         socketHelper.ws.send(data.json());

@@ -14,7 +14,6 @@ class Login extends Component {
     }
 
     _login = async () => {
-        debugger
         const {setJWT} = this.props
         await axios({
             url: `${protocol.http}${hostUri}/auth/login`,

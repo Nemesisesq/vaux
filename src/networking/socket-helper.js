@@ -31,20 +31,31 @@ export default class SocketHelper {
      * @param  {String} url the url to connect to
      */
     async connectAsync(url) {
+        this.url = url
         const success = await new Promise((resolve, reject) => {
             this.ws = new WebSocket(url);
             this.ws.addEventListener("open", () => resolve(true));
+
             this.ws.addEventListener("error", err => {
                 console.log(err);
                 resolve(false);
+                this.reconnect.bind(this)()
             });
         });
 
 
         if (success) {
             this.ws.addEventListener("message", this._onMessage.bind(this));
+            this.ws.addEventListener("close", this.reconnect.bind(this));
         }
         return success;
+    }
+
+
+    reconnect(e) {
+        setTimeout(_ => {
+            this.connectAsync(this.url)
+        }, 500)
     }
 
     /**
