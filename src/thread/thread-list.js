@@ -14,6 +14,7 @@ import { CREATE_THREAD, SET_USER, SET_ACTIVE_THREAD } from "../utils/types";
 import {setJWT} from "../ducks/ducks.auth";
 import NavigationService from '../navigation/navigation.service'
 import axios from "axios/index";
+import {setUserList} from "../ducks/networking-duck";
 
 class ThreadList extends Component {
    static propTypes = {
@@ -47,18 +48,14 @@ class ThreadList extends Component {
    }
 
    _addThread = () => {
-      const { socketHelper } = this.props;
-      const chance = new Chance();
-      console.log("pressed");
-      let t = new Thread("", chance.word());
-      const data = new Data(CREATE_THREAD, t.toJson(), null);
-      socketHelper.ws.send(data.json());
+      this.props.navigation.navigate("NewThread")
    };
 
    componentDidMount() {
       const { socketHelper } = this.props;
       console.log(this.props.email)
       socketHelper.subscribe("threads", this._receivedThreads);
+      socketHelper.subscribe("users", this._receivedUserList);
       const data = new Data(SET_USER, this.props.email, null);
       socketHelper.ws.send(data.json());
 
@@ -93,6 +90,11 @@ class ThreadList extends Component {
 
       console.log(data);
    };
+
+    _receivedUserList = data => {
+        data.payload && this.props.setUserList(data.payload);
+        console.log(data);
+    };
 
    _rowSelected = threadId => {
       const { socketHelper } = this.props;
@@ -186,6 +188,7 @@ export default connect(mapStateToProps, {
    setThreads: thread.setThreads,
    setActiveThread: thread.setActiveThread,
    setMessagesForThread: message.setMessagesForThread,
+    setUserList: setUserList,
     setJWT: setJWT
 })(ThreadList);
 

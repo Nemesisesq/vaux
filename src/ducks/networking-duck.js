@@ -5,13 +5,15 @@ import Symbol from "es6-symbol";
 const INITIAL_STATE = {
    socketHelper: null,
    error: null,
-   user: {}
+   user: {},
+   userList: []
 };
 
 const ACTIONS = {
    SET_SOCKET_HELPER: Symbol("ACTION/NETWORKING/SET_SOCKET_HELPER"),
    CLEAR_SOCKET_HELPER: Symbol("ACTION/NETWORKING/CLEAR_SOCKET_HELPER"),
-   SET_ERROR: Symbol("ACTION/NETWORKING/ERROR")
+   SET_ERROR: Symbol("ACTION/NETWORKING/ERROR"),
+    SET_USER_LIST: Symbol("ACTION/NETWORKING/SET_USER_LIST")
 };
 
 export async function connect(url) {
@@ -46,6 +48,13 @@ export function setUser(user) {
    };
 }
 
+export const setUserList = (userList) => {
+   return {
+      type: ACTIONS.SET_USER_LIST,
+       payload: userList
+   }
+}
+
 export default function reducer(state = INITIAL_STATE, action = {}) {
    switch (action.type) {
       case ACTIONS.SET_SOCKET_HELPER:
@@ -72,6 +81,11 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
             ...state,
             user: action.payload
          };
+       case ACTIONS.SET_USER_LIST:
+          return {
+              ...state,
+              userList: action.payload
+          }
       default:
          return { ...state };
    }

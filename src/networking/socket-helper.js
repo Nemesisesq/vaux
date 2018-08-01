@@ -55,7 +55,7 @@ export default class SocketHelper {
     reconnect(e) {
         setTimeout(_ => {
             this.connectAsync(this.url)
-        }, 500)
+        }, 2000)
     }
 
     /**

@@ -78,7 +78,6 @@ class ChatBase extends Component {
             this._playSoundAsync(sound);
         }
         this.setState({newMessageSound: null});
-        debugger
         messages.user = user
         // this.props.addMessages(this.props.activeThread, messages);
         const data = new Data(ADD_MESSAGE, messages, this.props.activeThread);

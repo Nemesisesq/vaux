@@ -20,9 +20,12 @@ export class Thread {
         this.imageUrl = imageUrl;
         this.name = name;
         this.private = priv;
+        this.members = []
     }
 
-
+    addMember(user) {
+        this.members.push(user)
+    }
     toJson() {
         return {
             image_url: this.imageUrl,

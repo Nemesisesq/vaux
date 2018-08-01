@@ -4,6 +4,7 @@ import { createStackNavigator } from "react-navigation";
 import { navStyles } from "./constants";
 import ThreadList from "./thread";
 import ChatBase from "./chat";
+import NewThread from "./thread/thread.new"
 
 const Navigator = createStackNavigator(
    {
@@ -12,7 +13,10 @@ const Navigator = createStackNavigator(
       },
       Chat: {
          screen: ChatBase
-      }
+      },
+       NewThread: {
+          screen: NewThread
+       }
    },
    {
       initialRoute: "Threads",
