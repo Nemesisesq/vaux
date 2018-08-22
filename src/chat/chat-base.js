@@ -52,10 +52,6 @@ class ChatBase extends Component {
 
     componentWillUnmount() {
         const {socketHelper, user} = this.props;
-        socketHelper.unsubscribe(
-            `thread.${this.props.activeThread}`,
-            this._receiveMessage
-        );
         socketHelper.unsubscribe(ADD_MESSAGE, this._receiveMessage);
     }
 
@@ -63,6 +59,7 @@ class ChatBase extends Component {
         data = data.payload.map(i => JSON.parse(i))
         let [message] = data;
         message._id = message.id;
+        debugger
         this.props.updateMessage(message.thread_id, message._id, message);
     };
 

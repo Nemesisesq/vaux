@@ -20,7 +20,7 @@ const persistConfig = {
    key: "root",
    storage: storage,
    stateReconciler: hardSet,
-   blacklist: ["networking"]
+   blacklist: ["networking", "thread"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
